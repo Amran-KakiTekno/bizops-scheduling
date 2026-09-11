@@ -186,9 +186,9 @@ export default function App() {
               <div className="w-8 h-8 rounded-lg bg-cyan-500/10 border border-cyan-500/20 text-cyan-400 flex items-center justify-center">
                 <Users className="w-4 h-4" />
               </div>
-              <span className="font-bold text-base text-white tracking-tight">EziBiz Shifts</span>
+              <span className="font-bold text-base text-white tracking-tight">EziBiz HRMS</span>
               <span className="text-[11px] font-mono px-2 py-0.5 rounded-full bg-cyan-500/10 text-cyan-400 border border-cyan-500/20">
-                HR & Scheduling
+                HR & Workforce Ops
               </span>
             </div>
           </div>
@@ -206,7 +206,7 @@ export default function App() {
               <span>Mobile ESS Simulator</span>
             </button>
             <a 
-              href="https://github.com/Amran-KakiTekno/ezibiz-shifts" 
+              href="https://github.com/Amran-KakiTekno/ezibiz-hrms" 
               target="_blank" 
               rel="noreferrer"
               className="p-2 rounded-lg text-slate-400 hover:text-white hover:bg-slate-900 transition-colors"

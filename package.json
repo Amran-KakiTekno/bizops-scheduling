@@ -1,6 +1,6 @@
 {
     "version":  "1.0.0",
-    "name":  "ezibiz-shifts",
+    "name":  "ezibiz-hrms",
     "scripts":  {
                     "preview":  "vite preview",
                     "build":  "vite build",
