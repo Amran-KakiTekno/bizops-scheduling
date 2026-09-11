@@ -41,7 +41,7 @@ export default function TeamDirectoryView({
             value={search}
             onChange={(e) => setSearch(e.target.value)}
             placeholder="Search by name, role, or staff ID..."
-            className="w-full bg-slate-900 border border-slate-800 rounded-xl pl-10 pr-4 py-2 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-cyan-500 transition-colors"
+            className="w-full bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl pl-10 pr-4 py-2 text-xs text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:border-cyan-500 transition-colors shadow-sm"
           />
         </div>
 
@@ -51,10 +51,10 @@ export default function TeamDirectoryView({
             <button
               key={dept}
               onClick={() => setDeptFilter(dept)}
-              className={`px-3 py-1.5 rounded-lg whitespace-nowrap font-medium transition-colors ${
+              className={`px-3 py-1.5 rounded-lg whitespace-nowrap font-medium transition-colors cursor-pointer ${
                 deptFilter === dept 
-                  ? 'bg-cyan-600 text-white shadow-lg shadow-cyan-600/20' 
-                  : 'bg-slate-900 border border-slate-800 text-slate-400 hover:text-white'
+                  ? 'bg-cyan-600 text-white shadow-sm' 
+                  : 'bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white shadow-sm'
               }`}
             >
               {dept}
@@ -66,13 +66,13 @@ export default function TeamDirectoryView({
       {/* Directory Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
         {filtered.length === 0 ? (
-          <div className="col-span-full p-8 text-center bg-slate-900 border border-slate-800 rounded-2xl space-y-3">
-            <div className="w-12 h-12 rounded-full bg-slate-800 text-slate-400 mx-auto flex items-center justify-center">
+          <div className="col-span-full p-8 text-center bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl space-y-3 shadow-sm">
+            <div className="w-12 h-12 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-400 mx-auto flex items-center justify-center">
               <Users className="w-6 h-6" />
             </div>
             <div>
-              <p className="text-sm font-semibold text-white">No team members match your search</p>
-              <p className="text-xs text-slate-400 mt-1">
+              <p className="text-sm font-semibold text-slate-900 dark:text-white">No team members match your search</p>
+              <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">
                 No active staff found matching "{search}" {deptFilter !== 'All' ? `in ${deptFilter}` : ''}.
               </p>
             </div>
@@ -82,7 +82,7 @@ export default function TeamDirectoryView({
                 setSearch('');
                 setDeptFilter('All');
               }}
-              className="px-3.5 py-1.5 rounded-lg bg-cyan-600/20 text-cyan-300 border border-cyan-500/30 text-xs font-medium hover:bg-cyan-600/30 transition-colors"
+              className="px-3.5 py-1.5 rounded-lg bg-cyan-500/10 text-cyan-700 dark:text-cyan-300 border border-cyan-500/30 text-xs font-medium hover:bg-cyan-500/20 transition-colors cursor-pointer"
             >
               Reset Search Filters
             </button>
@@ -94,23 +94,23 @@ export default function TeamDirectoryView({
             return (
               <div
                 key={emp.id}
-                className="p-5 rounded-2xl bg-slate-900 border border-slate-800 hover:border-slate-700 transition-all space-y-4 flex flex-col justify-between"
+                className="p-5 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 hover:border-slate-300 dark:hover:border-slate-700 shadow-sm transition-all space-y-4 flex flex-col justify-between"
               >
                 <div>
                   {/* Card Top */}
                   <div className="flex items-start justify-between gap-3">
                     <div className="flex items-center gap-3">
-                      <div className="w-12 h-12 rounded-xl bg-slate-800 border border-slate-700 text-white flex items-center justify-center font-bold text-sm font-mono shadow-inner">
+                      <div className="w-12 h-12 rounded-xl bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-800 dark:text-white flex items-center justify-center font-bold text-sm font-mono shadow-inner">
                         {emp.avatar}
                       </div>
                       <div>
                         <div className="flex items-center gap-2">
-                          <h4 className="font-bold text-white text-sm hover:text-cyan-300 transition-colors cursor-pointer" onClick={() => onSelectEmployee(emp)}>
+                          <h4 className="font-bold text-slate-900 dark:text-white text-sm hover:text-cyan-600 dark:hover:text-cyan-300 transition-colors cursor-pointer" onClick={() => onSelectEmployee(emp)}>
                             {emp.name}
                           </h4>
                         </div>
-                        <p className="text-xs text-slate-400">{emp.role}</p>
-                        <span className="text-[10px] font-mono text-cyan-400 mt-0.5 inline-block">
+                        <p className="text-xs text-slate-500 dark:text-slate-400">{emp.role}</p>
+                        <span className="text-[10px] font-mono text-cyan-600 dark:text-cyan-400 mt-0.5 inline-block">
                           {emp.department}
                         </span>
                       </div>
@@ -118,22 +118,22 @@ export default function TeamDirectoryView({
 
                     <span className={`text-[10px] font-medium px-2 py-0.5 rounded border ${
                       emp.status === 'Active' 
-                        ? 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20' 
-                        : 'bg-amber-500/10 text-amber-400 border-amber-500/20'
+                        ? 'bg-emerald-500/10 text-emerald-700 dark:text-emerald-400 border-emerald-500/20' 
+                        : 'bg-amber-500/10 text-amber-700 dark:text-amber-400 border-amber-500/20'
                     }`}>
                       {emp.status}
                     </span>
                   </div>
 
                   {/* Key Metrics */}
-                  <div className="grid grid-cols-2 gap-2 my-3 p-2.5 rounded-xl bg-slate-950/60 border border-slate-800/80 text-[11px] font-mono">
+                  <div className="grid grid-cols-2 gap-2 my-3 p-2.5 rounded-xl bg-slate-50 dark:bg-slate-950/60 border border-slate-200 dark:border-slate-800/80 text-[11px] font-mono">
                     <div>
                       <span className="text-slate-500 text-[10px] uppercase font-sans">Base Wage</span>
-                      <p className="text-emerald-400 font-semibold mt-0.5">RM {emp.rate}/hr</p>
+                      <p className="text-emerald-600 dark:text-emerald-400 font-semibold mt-0.5">RM {emp.rate}/hr</p>
                     </div>
                     <div>
                       <span className="text-slate-500 text-[10px] uppercase font-sans">Leave Avail</span>
-                      <p className="text-cyan-300 font-semibold mt-0.5">{emp.leaveBalances?.annual || 0} AL • {emp.leaveBalances?.medical || 0} MC</p>
+                      <p className="text-cyan-600 dark:text-cyan-300 font-semibold mt-0.5">{emp.leaveBalances?.annual || 0} AL • {emp.leaveBalances?.medical || 0} MC</p>
                     </div>
                   </div>
 
@@ -148,10 +148,10 @@ export default function TeamDirectoryView({
                         key={i}
                         className={`text-[10px] px-2 py-0.5 rounded border flex items-center gap-1 ${
                           c.badge === 'emerald'
-                            ? 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20'
+                            ? 'bg-emerald-500/10 text-emerald-700 dark:text-emerald-400 border-emerald-500/20'
                             : c.badge === 'amber'
-                            ? 'bg-amber-500/10 text-amber-400 border-amber-500/20 motion-safe:animate-pulse'
-                            : 'bg-rose-500/10 text-rose-400 border-rose-500/20'
+                            ? 'bg-amber-500/10 text-amber-700 dark:text-amber-400 border-amber-500/20 motion-safe:animate-pulse'
+                            : 'bg-rose-500/10 text-rose-700 dark:text-rose-400 border-rose-500/20'
                         }`}
                         title={`Expires: ${c.expiry}`}
                       >
@@ -164,19 +164,19 @@ export default function TeamDirectoryView({
               </div>
 
               {/* Bottom Card Actions */}
-              <div className="pt-3 border-t border-slate-800/80 flex items-center justify-between gap-2 text-xs">
+              <div className="pt-3 border-t border-slate-200 dark:border-slate-800/80 flex items-center justify-between gap-2 text-xs">
                 <button
                   onClick={() => onViewPayslip(emp)}
-                  className="p-1.5 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800 transition-colors flex items-center gap-1 text-[11px]"
+                  className="p-1.5 rounded-lg text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors flex items-center gap-1 text-[11px] cursor-pointer"
                   title="Generate Digital Payslip"
                 >
-                  <DollarSign className="w-3.5 h-3.5 text-emerald-400" />
+                  <DollarSign className="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400" />
                   <span>Payslip</span>
                 </button>
 
                 <button
                   onClick={() => onSelectEmployee(emp)}
-                  className="px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-cyan-600/30 hover:border-cyan-500 text-slate-200 text-[11px] font-medium transition-colors border border-slate-700 flex items-center gap-1"
+                  className="px-3 py-1.5 rounded-lg bg-slate-100 dark:bg-slate-800 hover:bg-cyan-500/10 dark:hover:bg-cyan-600/30 hover:border-cyan-500 text-slate-700 dark:text-slate-200 text-[11px] font-medium transition-colors border border-slate-200 dark:border-slate-700 flex items-center gap-1 cursor-pointer"
                 >
                   <span>Dossier</span>
                   <ChevronRight className="w-3 h-3" />

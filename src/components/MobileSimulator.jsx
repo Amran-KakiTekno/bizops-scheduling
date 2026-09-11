@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { 
   Smartphone, 
   Maximize2,
@@ -20,29 +20,45 @@ export default function MobileSimulator({
   onViewPayslip,
   onApplyLeaveDemo 
 }) {
-  const [viewMode, setViewMode] = useState('bezel'); // 'bezel' | 'full'
+  const [viewMode, setViewMode] = useState(() => {
+    if (typeof window !== 'undefined' && window.innerWidth < 640) {
+      return 'full';
+    }
+    return 'bezel'; // 'bezel' | 'full'
+  });
   const [mobileTab, setMobileTab] = useState('punch');
   const [selectedLeaveType, setSelectedLeaveType] = useState('Medical Leave (MC)');
   const [leaveDays, setLeaveDays] = useState('1');
   const [leaveReason, setLeaveReason] = useState('Fever & flu - doctor advised bed rest');
 
+  // Auto-switch to full view on mobile screen widths
+  useEffect(() => {
+    const handleResize = () => {
+      if (typeof window !== 'undefined' && window.innerWidth < 640) {
+        setViewMode('full');
+      }
+    };
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
   return (
     <div className="space-y-4 max-w-4xl mx-auto">
       {/* Viewport Switcher Toolbar */}
-      <div className="flex flex-col sm:flex-row items-center justify-between gap-3 p-3.5 rounded-2xl bg-zinc-950/80 border border-white/[0.08] shadow-rim">
+      <div className="flex flex-col sm:flex-row items-center justify-between gap-3 p-3.5 rounded-2xl bg-white dark:bg-zinc-950/80 border border-slate-200 dark:border-white/[0.08] shadow-sm dark:shadow-rim">
         <div>
-          <h3 className="text-xs font-semibold text-zinc-100">Employee Self-Service (ESS) Simulator</h3>
-          <p className="text-[11px] text-zinc-400">Preview field staff clock-in, shift rosters, and leave submissions.</p>
+          <h3 className="text-xs font-semibold text-slate-900 dark:text-zinc-100">Employee Self-Service (ESS) Simulator</h3>
+          <p className="text-[11px] text-slate-500 dark:text-zinc-400">Preview field staff clock-in, shift rosters, and leave submissions.</p>
         </div>
 
         {/* Viewport Switcher Button */}
-        <div className="inline-flex items-center p-1 rounded-xl bg-black border border-white/[0.08] text-xs shadow-rim">
+        <div className="inline-flex items-center p-1 rounded-xl bg-slate-100 dark:bg-black border border-slate-200 dark:border-white/[0.08] text-xs shadow-sm dark:shadow-rim">
           <button
             onClick={() => setViewMode('bezel')}
             className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg font-medium transition-all cursor-pointer ${
               viewMode === 'bezel'
-                ? 'bg-zinc-900 text-cyan-400 border border-white/[0.08] shadow-rim'
-                : 'text-zinc-400 hover:text-white'
+                ? 'bg-white dark:bg-zinc-900 text-cyan-600 dark:text-cyan-400 border border-slate-200 dark:border-white/[0.08] shadow-sm'
+                : 'text-slate-500 dark:text-zinc-400 hover:text-slate-900 dark:hover:text-white'
             }`}
             title="Simulate realistic smartphone bezel frame"
           >
@@ -53,8 +69,8 @@ export default function MobileSimulator({
             onClick={() => setViewMode('full')}
             className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg font-medium transition-all cursor-pointer ${
               viewMode === 'full'
-                ? 'bg-zinc-900 text-cyan-400 border border-white/[0.08] shadow-rim'
-                : 'text-zinc-400 hover:text-white'
+                ? 'bg-white dark:bg-zinc-900 text-cyan-600 dark:text-cyan-400 border border-slate-200 dark:border-white/[0.08] shadow-sm'
+                : 'text-slate-500 dark:text-zinc-400 hover:text-slate-900 dark:hover:text-white'
             }`}
             title="Expand to full container mobile view"
           >

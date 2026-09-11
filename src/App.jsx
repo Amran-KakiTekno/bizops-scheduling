@@ -15,7 +15,10 @@ import {
   ArrowRightLeft, 
   Sliders, 
   FileText,
-  Settings
+  Settings,
+  MoreHorizontal,
+  X,
+  ChevronRight
 } from 'lucide-react';
 
 import { 
@@ -56,6 +59,7 @@ const resolveTab = (tab) => {
 export default function App() {
   const { theme, setTheme, language, setLanguage, t } = useSettings();
   const [showSettingsModal, setShowSettingsModal] = useState(false);
+  const [showMoreDrawer, setShowMoreDrawer] = useState(false);
 
   const [activeTab, setActiveTab] = useState(() => {
     if (typeof window !== 'undefined') {
@@ -212,10 +216,10 @@ export default function App() {
   const pendingLeavesCount = leaveRequests.filter(l => l.status === 'Pending').length;
   const pendingTimesheetsCount = attendanceList.filter(a => !a.reconciled).length;
 
-  const tabsList = [
+  const sidebarNavItems = [
     { id: 'roster', label: t('tabRoster'), icon: CalendarClock },
-    { id: 'attendance', label: t('tabAttendance'), icon: Clock },
-    { id: 'leave-claims', label: t('tabLeaveClaims'), icon: FileText },
+    { id: 'attendance', label: t('tabAttendance'), icon: Clock, badge: pendingTimesheetsCount },
+    { id: 'leave-claims', label: t('tabLeaves'), icon: FileText, badge: pendingLeavesCount },
     { id: 'team', label: t('tabTeam'), icon: Users },
     { id: 'payroll', label: t('tabPayroll'), icon: DollarSign },
     { id: 'swaps', label: t('tabSwaps'), icon: ArrowRightLeft },
@@ -224,40 +228,50 @@ export default function App() {
   ];
 
   return (
-    <div className="min-h-screen bg-black text-zinc-100 flex flex-col md:flex-row font-sans transition-colors duration-200 selection:bg-cyan-500/20 selection:text-cyan-300">
+    <div className="min-h-screen bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-slate-100 flex flex-col md:flex-row font-sans transition-colors duration-200 selection:bg-cyan-500/20 selection:text-cyan-700 dark:selection:text-cyan-300">
       
       {/* DESKTOP SIDEBAR (Visible >= 768px) */}
-      <aside className="hidden md:flex md:w-64 md:flex-col md:fixed md:inset-y-0 z-30 bg-black/90 backdrop-blur-xl border-r border-white/[0.08] transition-colors">
-        <div className="flex flex-col h-full justify-between p-4">
-          <div className="space-y-6">
-            {/* Branding & Backlink */}
+      <aside className="hidden md:flex md:w-64 md:flex-col md:fixed md:inset-y-0 z-30 bg-white/95 dark:bg-slate-950/95 backdrop-blur-xl border-r border-slate-200 dark:border-slate-800 p-4 justify-between select-none">
+        <div className="flex flex-col h-full justify-between">
+          <div className="space-y-4">
+            {/* Top: Back to Hub link, Logo + badge, workspace indicator */}
             <div>
               <a 
                 href="https://ezibiz-hub.pages.dev" 
-                className="inline-flex items-center gap-1.5 text-xs text-zinc-400 hover:text-zinc-100 transition-colors mb-3 px-2 py-1 rounded-lg hover:bg-zinc-900 border border-transparent hover:border-white/[0.08]"
+                className="inline-flex items-center gap-1.5 text-xs text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-100 transition-colors mb-3 px-2 py-1 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-900/60 border border-transparent hover:border-slate-200 dark:hover:border-slate-800"
               >
                 <ArrowLeft className="w-3.5 h-3.5" />
                 <span>{t('backToHub')}</span>
               </a>
 
-              <div className="flex items-center gap-3 px-1">
-                <div className="w-10 h-10 rounded-xl bg-cyan-500/10 border border-cyan-500/20 text-cyan-400 flex items-center justify-center font-bold shrink-0 shadow-rim">
+              <div className="flex items-center gap-3 px-1 mb-2">
+                <div className="w-10 h-10 rounded-xl bg-cyan-500/10 border border-cyan-500/20 text-cyan-600 dark:text-cyan-400 flex items-center justify-center font-bold shrink-0 shadow-sm">
                   <Users className="w-5 h-5" />
                 </div>
-                <div className="min-w-0">
-                  <span className="font-bold text-base text-zinc-100 tracking-tight block truncate">
+                <div className="min-w-0 flex-1">
+                  <span className="font-bold text-base text-slate-900 dark:text-slate-100 tracking-tight block truncate">
                     EziBiz HRMS
                   </span>
-                  <p className="text-[11px] text-zinc-400 font-mono truncate">
-                    People & Operations
-                  </p>
+                  <div className="flex items-center gap-1.5 mt-0.5">
+                    <span className="inline-flex items-center px-1.5 py-0.2 rounded text-[10px] font-semibold bg-cyan-100 dark:bg-cyan-950/80 text-cyan-700 dark:text-cyan-300 border border-cyan-200 dark:border-cyan-800/60">
+                      Workforce Ops
+                    </span>
+                  </div>
+                </div>
+              </div>
+
+              {/* Workspace indicator */}
+              <div className="px-1 py-1">
+                <div className="flex items-center gap-2 px-2.5 py-1.5 rounded-lg bg-slate-100/80 dark:bg-slate-900/80 border border-slate-200 dark:border-slate-800 text-[11px] text-slate-600 dark:text-slate-400 font-mono">
+                  <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse shrink-0"></span>
+                  <span className="truncate">Downtown Flagship • HQ</span>
                 </div>
               </div>
             </div>
 
-            {/* Navigation Tabs */}
-            <nav className="space-y-1">
-              {tabsList.map(tab => {
+            {/* Middle: 8 vertical tab navigation buttons */}
+            <nav className="space-y-1 overflow-y-auto max-h-[calc(100vh-270px)] pr-0.5">
+              {sidebarNavItems.map(tab => {
                 const Icon = tab.icon;
                 const isActive = activeTab === tab.id;
                 return (
@@ -267,157 +281,104 @@ export default function App() {
                     onClick={() => handleTabChange(tab.id)}
                     className={`w-full flex items-center justify-between px-3 py-2 rounded-xl text-xs font-medium transition-all cursor-pointer ${
                       isActive
-                        ? 'bg-zinc-900 text-zinc-100 font-semibold border border-white/[0.08] shadow-rim'
-                        : 'text-zinc-400 hover:text-zinc-200 hover:bg-zinc-900/50'
+                        ? 'bg-cyan-50 dark:bg-cyan-950/40 text-cyan-700 dark:text-cyan-300 font-semibold border border-cyan-200 dark:border-cyan-800/60 shadow-sm'
+                        : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-100 hover:bg-slate-100 dark:hover:bg-slate-900/60 border border-transparent'
                     }`}
                   >
-                    <div className="flex items-center gap-3 min-w-0">
-                      <Icon className={`w-4 h-4 shrink-0 ${isActive ? 'text-cyan-400' : 'text-zinc-400'}`} />
+                    <div className="flex items-center gap-2.5 min-w-0">
+                      <Icon className={`w-4 h-4 shrink-0 ${isActive ? 'text-cyan-600 dark:text-cyan-400' : 'text-slate-400 dark:text-slate-500'}`} />
                       <span className="truncate">{tab.label}</span>
                     </div>
-                    {isActive && (
-                      <span className="w-1.5 h-1.5 rounded-full bg-cyan-400 shadow-sm shadow-cyan-400/50 shrink-0" />
-                    )}
+                    <div className="flex items-center gap-1.5 shrink-0">
+                      {tab.badge > 0 && (
+                        <span className="px-1.5 py-0.2 rounded-full bg-amber-100 dark:bg-amber-950/60 text-amber-700 dark:text-amber-300 border border-amber-200 dark:border-amber-800/60 font-mono text-[10px] font-semibold">
+                          {tab.badge}
+                        </span>
+                      )}
+                      {isActive && (
+                        <span className="w-1.5 h-1.5 rounded-full bg-cyan-500 dark:bg-cyan-400 shadow-sm shadow-cyan-500/50" />
+                      )}
+                    </div>
                   </button>
                 );
               })}
             </nav>
           </div>
 
-          {/* Desktop Sidebar Footer */}
-          <div className="pt-4 border-t border-white/[0.08] space-y-2">
-            <button 
-              onClick={() => handleTabChange('mobile')}
-              className={`w-full flex items-center justify-center gap-1.5 text-xs font-medium px-3 py-2 rounded-xl transition-all shadow-rim cursor-pointer ${
-                activeTab === 'mobile'
-                  ? 'bg-cyan-500/20 text-cyan-300 border border-cyan-500/40'
-                  : 'bg-zinc-900 text-cyan-400 hover:bg-cyan-500/10 border border-cyan-500/30'
-              }`}
+          {/* Bottom footer: Settings trigger (⚙️) + Suite Waffle Menu */}
+          <div className="pt-3 border-t border-slate-200 dark:border-slate-800 flex items-center justify-between px-1">
+            <button
+              type="button"
+              onClick={() => setShowSettingsModal(true)}
+              className="flex items-center gap-2 px-2.5 py-1.5 rounded-xl text-xs font-medium text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-100 hover:bg-slate-100 dark:hover:bg-slate-900/60 transition-colors cursor-pointer"
+              title={t('settings')}
             >
-              <Smartphone className="w-3.5 h-3.5 shrink-0" />
-              <span>{t('mobileSimulator')}</span>
+              <Settings className="w-4 h-4 text-slate-500 dark:text-slate-400" />
+              <span>{t('settings')}</span>
             </button>
 
-            <div className="flex items-center justify-between px-1 pt-1">
-              <button
-                type="button"
-                onClick={() => setShowSettingsModal(true)}
-                className="flex items-center gap-2 px-2.5 py-1.5 rounded-xl text-xs font-medium text-zinc-400 hover:text-zinc-100 hover:bg-zinc-900 transition-colors cursor-pointer"
-                title={t('settings')}
-              >
-                <Settings className="w-4 h-4 text-zinc-400" />
-                <span>{t('settings')}</span>
-              </button>
-
-              <SuiteWaffleMenu currentApp="hrms" />
-            </div>
+            <SuiteWaffleMenu currentApp="hrms" />
           </div>
         </div>
       </aside>
 
       {/* MOBILE TOP BAR (Visible < 768px) */}
-      <header className="md:hidden sticky top-0 z-40 bg-black/90 backdrop-blur border-b border-white/[0.08] px-4 h-14 flex items-center justify-between transition-colors">
+      <header className="md:hidden sticky top-0 z-40 bg-white/95 dark:bg-slate-950/95 backdrop-blur border-b border-slate-200 dark:border-slate-800 px-4 h-14 flex items-center justify-between transition-colors select-none">
         <div className="flex items-center gap-2.5 min-w-0">
           <a 
             href="https://ezibiz-hub.pages.dev" 
-            className="p-1.5 rounded-lg text-zinc-400 hover:text-zinc-100"
+            className="p-1.5 rounded-lg text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-100"
             title={t('backToHub')}
           >
             <ArrowLeft className="w-4 h-4" />
           </a>
-          <div className="w-7 h-7 rounded-lg bg-cyan-500/10 border border-cyan-500/20 text-cyan-400 flex items-center justify-center font-bold shrink-0">
+          <div className="w-7 h-7 rounded-lg bg-cyan-500/10 border border-cyan-500/20 text-cyan-600 dark:text-cyan-400 flex items-center justify-center font-bold shrink-0">
             <Users className="w-3.5 h-3.5" />
           </div>
-          <span className="font-bold text-sm text-zinc-100 tracking-tight truncate">
+          <span className="font-bold text-sm text-slate-900 dark:text-slate-100 tracking-tight truncate">
             EziBiz HRMS
           </span>
         </div>
 
         <div className="flex items-center gap-1.5">
-          <button 
-            onClick={() => handleTabChange('mobile')}
-            className="px-2.5 py-1 rounded-lg bg-cyan-600 text-white text-xs font-medium"
-          >
-            {t('mobileShort')}
-          </button>
           <SuiteWaffleMenu currentApp="hrms" />
         </div>
       </header>
 
       {/* MAIN CONTAINER */}
-      <div className="md:pl-64 flex-1 flex flex-col min-w-0 pb-20 md:pb-8">
-        <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6 space-y-6">
+      <div className="md:pl-64 flex-1 flex flex-col min-w-0 pb-24 md:pb-8 px-4 sm:px-6 lg:px-8 py-6">
+        <main className="flex-1 max-w-7xl w-full mx-auto space-y-6">
           
           {/* KPI Dashboard Row */}
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
-            <div className="p-4 rounded-xl bg-zinc-950/80 border border-white/[0.08] shadow-rim hover:border-white/[0.16] transition-all space-y-1">
-              <span className="text-[11px] font-mono uppercase tracking-wider text-zinc-400">{t('kpiTeam')}</span>
-              <div className="text-xl font-bold font-mono tabular-nums text-zinc-100">{employees.length} Staff</div>
-              <p className="text-[11px] text-cyan-400 font-mono">{t('kpiTeamSub')}</p>
+            <div className="p-4 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm hover:border-slate-300 dark:hover:border-slate-700 transition-all space-y-1">
+              <span className="text-[11px] font-mono uppercase tracking-wider text-slate-500 dark:text-slate-400">{t('kpiTeam')}</span>
+              <div className="text-xl font-bold font-mono tabular-nums text-slate-900 dark:text-slate-100">{employees.length} Staff</div>
+              <p className="text-[11px] text-cyan-600 dark:text-cyan-400 font-mono">{t('kpiTeamSub')}</p>
             </div>
 
-            <div className="p-4 rounded-xl bg-zinc-950/80 border border-white/[0.08] shadow-rim hover:border-white/[0.16] transition-all space-y-1">
-              <span className="text-[11px] font-mono uppercase tracking-wider text-zinc-400">{t('kpiTimesheets')}</span>
-              <div className="text-xl font-bold font-mono tabular-nums text-amber-400">
+            <div className="p-4 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm hover:border-slate-300 dark:hover:border-slate-700 transition-all space-y-1">
+              <span className="text-[11px] font-mono uppercase tracking-wider text-slate-500 dark:text-slate-400">{t('kpiTimesheets')}</span>
+              <div className="text-xl font-bold font-mono tabular-nums text-amber-600 dark:text-amber-400">
                 {pendingTimesheetsCount} Pending
               </div>
-              <p className="text-[11px] text-zinc-500 font-mono">{t('kpiTimesheetsSub')}</p>
+              <p className="text-[11px] text-slate-500 dark:text-slate-400 font-mono">{t('kpiTimesheetsSub')}</p>
             </div>
 
-            <div className="p-4 rounded-xl bg-zinc-950/80 border border-white/[0.08] shadow-rim hover:border-white/[0.16] transition-all space-y-1">
-              <span className="text-[11px] font-mono uppercase tracking-wider text-zinc-400">{t('kpiLeave')}</span>
-              <div className="text-xl font-bold font-mono tabular-nums text-cyan-400">
+            <div className="p-4 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm hover:border-slate-300 dark:hover:border-slate-700 transition-all space-y-1">
+              <span className="text-[11px] font-mono uppercase tracking-wider text-slate-500 dark:text-slate-400">{t('kpiLeave')}</span>
+              <div className="text-xl font-bold font-mono tabular-nums text-cyan-600 dark:text-cyan-400">
                 {pendingLeavesCount} Requests
               </div>
-              <p className="text-[11px] text-zinc-500 font-mono">{t('kpiLeaveSub')}</p>
+              <p className="text-[11px] text-slate-500 dark:text-slate-400 font-mono">{t('kpiLeaveSub')}</p>
             </div>
 
-            <div className="p-4 rounded-xl bg-zinc-950/80 border border-white/[0.08] shadow-rim hover:border-white/[0.16] transition-all space-y-1">
-              <span className="text-[11px] font-mono uppercase tracking-wider text-zinc-400">{t('kpiPayroll')}</span>
-              <div className="text-xl font-bold font-mono tabular-nums text-emerald-400">
+            <div className="p-4 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm hover:border-slate-300 dark:hover:border-slate-700 transition-all space-y-1">
+              <span className="text-[11px] font-mono uppercase tracking-wider text-slate-500 dark:text-slate-400">{t('kpiPayroll')}</span>
+              <div className="text-xl font-bold font-mono tabular-nums text-emerald-600 dark:text-emerald-400">
                 RM {payrollData.totalGross.toLocaleString('en-US', { minimumFractionDigits: 0 })}
               </div>
-              <p className="text-[11px] text-zinc-500 font-mono">{t('kpiPayrollSub')}</p>
-            </div>
-          </div>
-
-          {/* Navigation Segmented Pills */}
-          <div className="overflow-x-auto no-scrollbar pb-1">
-            <div 
-              role="tablist" 
-              aria-label="HRMS Modules"
-              className="inline-flex gap-1.5 p-1 rounded-xl bg-zinc-950/80 border border-white/[0.08] shadow-rim min-w-max"
-            >
-              {tabsList.map(tab => {
-                const Icon = tab.icon;
-                const isActive = activeTab === tab.id;
-                const badge = tab.id === 'attendance' ? pendingTimesheetsCount : tab.id === 'leave-claims' ? pendingLeavesCount : 0;
-
-                return (
-                  <button
-                    key={tab.id}
-                    role="tab"
-                    aria-selected={isActive}
-                    onClick={() => handleTabChange(tab.id)}
-                    className={`flex items-center gap-2 px-3.5 py-2 rounded-lg text-xs font-medium transition-all cursor-pointer ${
-                      isActive 
-                        ? 'bg-zinc-900 text-zinc-100 border border-white/[0.08] shadow-rim font-semibold' 
-                        : 'text-zinc-400 hover:text-zinc-200 hover:bg-zinc-900/50'
-                    }`}
-                  >
-                    <Icon className={`w-3.5 h-3.5 ${isActive ? 'text-cyan-400' : 'text-zinc-400'}`} />
-                    <span>{tab.label}</span>
-                    {badge > 0 && (
-                      <span className="px-1.5 py-0.2 rounded-full bg-amber-500/10 text-amber-300 border border-amber-500/30 font-mono text-[10px] font-semibold">
-                        {badge}
-                      </span>
-                    )}
-                    {isActive && (
-                      <span className="w-1.5 h-1.5 rounded-full bg-cyan-400 shadow-sm shadow-cyan-400/50" />
-                    )}
-                  </button>
-                );
-              })}
+              <p className="text-[11px] text-slate-500 dark:text-slate-400 font-mono">{t('kpiPayrollSub')}</p>
             </div>
           </div>
 
@@ -511,10 +472,11 @@ export default function App() {
       </div>
 
       {/* MOBILE BOTTOM NAVIGATION BAR (Visible < 768px) */}
-      <nav className="md:hidden fixed bottom-0 left-0 right-0 z-40 bg-white/95 dark:bg-slate-950/95 backdrop-blur border-t border-slate-200 dark:border-slate-800 px-2 py-1 flex items-center justify-around h-16 transition-colors">
+      <nav className="md:hidden fixed bottom-0 left-0 right-0 z-40 bg-white/95 dark:bg-slate-950/95 backdrop-blur border-t border-slate-200 dark:border-slate-800 h-16 pb-[env(safe-area-inset-bottom)] flex items-center justify-around px-2 transition-colors select-none">
         <button
+          type="button"
           onClick={() => handleTabChange('roster')}
-          className={`flex flex-col items-center justify-center flex-1 py-1 text-[10px] font-medium transition-colors ${
+          className={`flex flex-col items-center justify-center flex-1 py-1 text-[10px] font-medium transition-colors cursor-pointer ${
             activeTab === 'roster' ? 'text-cyan-600 dark:text-cyan-400 font-bold' : 'text-slate-500 dark:text-slate-400'
           }`}
         >
@@ -523,8 +485,9 @@ export default function App() {
         </button>
 
         <button
+          type="button"
           onClick={() => handleTabChange('attendance')}
-          className={`flex flex-col items-center justify-center flex-1 py-1 text-[10px] font-medium transition-colors relative ${
+          className={`flex flex-col items-center justify-center flex-1 py-1 text-[10px] font-medium transition-colors relative cursor-pointer ${
             activeTab === 'attendance' ? 'text-cyan-600 dark:text-cyan-400 font-bold' : 'text-slate-500 dark:text-slate-400'
           }`}
         >
@@ -538,13 +501,14 @@ export default function App() {
         </button>
 
         <button
+          type="button"
           onClick={() => handleTabChange('leave-claims')}
-          className={`flex flex-col items-center justify-center flex-1 py-1 text-[10px] font-medium transition-colors relative ${
+          className={`flex flex-col items-center justify-center flex-1 py-1 text-[10px] font-medium transition-colors relative cursor-pointer ${
             activeTab === 'leave-claims' ? 'text-cyan-600 dark:text-cyan-400 font-bold' : 'text-slate-500 dark:text-slate-400'
           }`}
         >
           <FileText className="w-5 h-5 mb-0.5" />
-          <span className="truncate">{t('tabLeaveClaims')}</span>
+          <span className="truncate">{t('tabLeaves')}</span>
           {pendingLeavesCount > 0 && (
             <span className="absolute top-0 right-3 w-4 h-4 rounded-full bg-cyan-500 text-white text-[9px] flex items-center justify-center font-bold">
               {pendingLeavesCount}
@@ -553,8 +517,9 @@ export default function App() {
         </button>
 
         <button
+          type="button"
           onClick={() => handleTabChange('payroll')}
-          className={`flex flex-col items-center justify-center flex-1 py-1 text-[10px] font-medium transition-colors ${
+          className={`flex flex-col items-center justify-center flex-1 py-1 text-[10px] font-medium transition-colors cursor-pointer ${
             activeTab === 'payroll' ? 'text-cyan-600 dark:text-cyan-400 font-bold' : 'text-slate-500 dark:text-slate-400'
           }`}
         >
@@ -563,13 +528,115 @@ export default function App() {
         </button>
 
         <button
-          onClick={() => setShowSettingsModal(true)}
-          className="flex flex-col items-center justify-center flex-1 py-1 text-[10px] font-medium text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition-colors"
+          type="button"
+          onClick={() => setShowMoreDrawer(true)}
+          className={`flex flex-col items-center justify-center flex-1 py-1 text-[10px] font-medium transition-colors cursor-pointer ${
+            ['team', 'swaps', 'rules', 'mobile'].includes(activeTab) || showMoreDrawer
+              ? 'text-cyan-600 dark:text-cyan-400 font-bold'
+              : 'text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
+          }`}
         >
-          <Settings className="w-5 h-5 mb-0.5" />
-          <span className="truncate">{t('settings')}</span>
+          <MoreHorizontal className="w-5 h-5 mb-0.5" />
+          <span className="truncate">{t('tabMore')}</span>
         </button>
       </nav>
+
+      {/* MORE DRAWER (Bottom Sheet for Mobile Viewports) */}
+      {showMoreDrawer && (
+        <div className="md:hidden fixed inset-0 z-50 flex flex-col justify-end">
+          {/* Backdrop */}
+          <div 
+            className="fixed inset-0 bg-slate-950/60 backdrop-blur-sm transition-opacity animate-in fade-in"
+            onClick={() => setShowMoreDrawer(false)}
+          />
+
+          {/* Sheet Content */}
+          <div className="relative z-50 bg-white dark:bg-slate-900 border-t border-slate-200 dark:border-slate-800 rounded-t-2xl shadow-2xl p-4 pb-[calc(env(safe-area-inset-bottom)+1.25rem)] animate-in slide-in-from-bottom duration-200 max-h-[85vh] overflow-y-auto">
+            {/* Handle Pill */}
+            <div className="w-12 h-1.5 rounded-full bg-slate-300 dark:bg-slate-700 mx-auto mb-3" />
+
+            <div className="flex items-center justify-between mb-3 px-1">
+              <h3 className="text-sm font-bold text-slate-900 dark:text-slate-100">
+                {t('moreModules')}
+              </h3>
+              <button
+                type="button"
+                onClick={() => setShowMoreDrawer(false)}
+                className="p-1 rounded-lg text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
+              >
+                <X className="w-4 h-4" />
+              </button>
+            </div>
+
+            <div className="space-y-1">
+              {[
+                { id: 'team', label: t('tabTeam'), icon: Users, desc: 'Employee directory & profiles' },
+                { id: 'swaps', label: t('tabSwaps'), icon: ArrowRightLeft, desc: 'Peer shift exchange requests' },
+                { id: 'rules', label: t('tabRules'), icon: ShieldCheck, desc: 'Labor laws & compliance guardrails' },
+                { id: 'mobile', label: t('tabMobile'), icon: Smartphone, desc: 'Interactive Mobile ESS simulator' }
+              ].map(item => {
+                const Icon = item.icon;
+                const isActive = activeTab === item.id;
+                return (
+                  <button
+                    key={item.id}
+                    type="button"
+                    onClick={() => {
+                      handleTabChange(item.id);
+                      setShowMoreDrawer(false);
+                    }}
+                    className={`w-full flex items-center justify-between p-3 rounded-xl text-left transition-all cursor-pointer ${
+                      isActive
+                        ? 'bg-cyan-50 dark:bg-cyan-950/40 border border-cyan-200 dark:border-cyan-800/60 text-cyan-700 dark:text-cyan-300 shadow-sm'
+                        : 'hover:bg-slate-100 dark:hover:bg-slate-800/60 border border-transparent text-slate-700 dark:text-slate-300'
+                    }`}
+                  >
+                    <div className="flex items-center gap-3 min-w-0">
+                      <div className={`w-9 h-9 rounded-lg flex items-center justify-center shrink-0 ${
+                        isActive
+                          ? 'bg-cyan-500/10 text-cyan-600 dark:text-cyan-400'
+                          : 'bg-slate-100 dark:bg-slate-800 text-slate-500 dark:text-slate-400'
+                      }`}>
+                        <Icon className="w-4 h-4" />
+                      </div>
+                      <div className="min-w-0">
+                        <p className="text-xs font-semibold truncate">{item.label}</p>
+                        <p className="text-[11px] text-slate-400 dark:text-slate-500 truncate">{item.desc}</p>
+                      </div>
+                    </div>
+                    {isActive && (
+                      <span className="w-2 h-2 rounded-full bg-cyan-500 dark:bg-cyan-400 shrink-0" />
+                    )}
+                  </button>
+                );
+              })}
+            </div>
+
+            <div className="my-2.5 border-t border-slate-200 dark:border-slate-800" />
+
+            {/* Settings Trigger inside More Drawer */}
+            <button
+              type="button"
+              onClick={() => {
+                setShowMoreDrawer(false);
+                setShowSettingsModal(true);
+              }}
+              className="w-full flex items-center justify-between p-3 rounded-xl text-left hover:bg-slate-100 dark:hover:bg-slate-800/60 transition-all border border-transparent text-slate-700 dark:text-slate-300 cursor-pointer"
+            >
+              <div className="flex items-center gap-3 min-w-0">
+                <div className="w-9 h-9 rounded-lg bg-slate-100 dark:bg-slate-800 text-slate-500 dark:text-slate-400 flex items-center justify-center shrink-0">
+                  <Settings className="w-4 h-4" />
+                </div>
+                <div className="min-w-0">
+                  <p className="text-xs font-semibold truncate">{t('settings')}</p>
+                  <p className="text-[11px] text-slate-400 dark:text-slate-500 truncate">{t('settingsSub')}</p>
+                </div>
+              </div>
+              <ChevronRight className="w-4 h-4 text-slate-400 shrink-0" />
+            </button>
+          </div>
+        </div>
+      )}
 
       {/* Global Slide-Over / Modals */}
       {selectedEmployeeForModal && (

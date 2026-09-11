@@ -81,7 +81,7 @@ export default function AccessibleModal({
         aria-label={!titleId ? ariaLabel : undefined}
         tabIndex={-1}
         onClick={(e) => e.stopPropagation()}
-        className={`bg-slate-900 border border-slate-800 rounded-2xl w-full ${maxWidth} shadow-2xl overflow-hidden flex flex-col max-h-[90vh] outline-none animate-in zoom-in-95 duration-150 ${contentClassName}`}
+        className={`bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-900 dark:text-slate-100 rounded-2xl w-full ${maxWidth} shadow-2xl overflow-hidden flex flex-col max-h-[90vh] outline-none animate-in zoom-in-95 duration-150 ${contentClassName}`}
       >
         {children}
       </div>
