@@ -4,23 +4,238 @@
 
 @layer base {
   body {
-    @apply bg-slate-950 text-slate-100 antialiased selection:bg-indigo-500 selection:text-white min-h-screen;
+    @apply bg-black text-zinc-100 antialiased selection:bg-cyan-500/20 selection:text-cyan-200 min-h-screen;
     font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+  }
+
+  /* Prevent iOS Safari aggressive auto-zoom on focus */
+  input, select, textarea {
+    font-size: 16px;
+  }
+  @media (min-width: 640px) {
+    input, select, textarea {
+      font-size: 0.75rem;
+    }
   }
 }
 
-/* Custom smooth scrollbar */
+/* Custom smooth scrollbar in obsidian tone */
 ::-webkit-scrollbar {
   width: 6px;
   height: 6px;
 }
 ::-webkit-scrollbar-track {
-  background: #0f172a;
+  background: #000000;
 }
 ::-webkit-scrollbar-thumb {
-  background: #334155;
+  background: #27272a;
   border-radius: 3px;
 }
 ::-webkit-scrollbar-thumb:hover {
+  background: #3f3f46;
+}
+
+/* Recent.design active dot indicator */
+.sidebar-active-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 9999px;
+  background-color: #06b6d4;
+  box-shadow: 0 0 8px rgba(6, 182, 212, 0.8);
+}
+
+/* Tab navigation horizontal scrollbar */
+.tab-scrollbar {
+  scrollbar-width: thin;
+  scrollbar-color: #334155 transparent;
+}
+.tab-scrollbar::-webkit-scrollbar {
+  height: 4px;
+}
+.tab-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+.tab-scrollbar::-webkit-scrollbar-thumb {
+  background: #334155;
+  border-radius: 9999px;
+}
+.tab-scrollbar::-webkit-scrollbar-thumb:hover {
   background: #475569;
+}
+/* ==========================================================================
+   Print Styles: Official Itemized Payslip Document
+   Hides app navigation, tabs, and buttons so the itemized payslip prints cleanly
+   on white paper without dark UI artifacts.
+   ========================================================================== */
+@media print {
+  @page {
+    margin: 12mm 15mm;
+    size: A4 portrait;
+  }
+
+  /* Hide app navigation headers, tabs, buttons, interactive controls, and non-printable elements */
+  header,
+  nav,
+  footer,
+  button,
+  .no-print,
+  [role="tablist"],
+  .payslip-header-actions,
+  .fixed.bottom-6 {
+    display: none !important;
+  }
+
+  /* Isolate payslip modal by hiding any other sibling nodes in the app root */
+  body > #root > div > *:not(.payslip-modal-backdrop) {
+    display: none !important;
+  }
+
+  /* Reset body and document canvas */
+  html, body {
+    background: #ffffff !important;
+    color: #0f172a !important;
+    min-height: auto !important;
+    height: auto !important;
+    overflow: visible !important;
+    font-size: 11pt !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
+  /* Remove dark modal overlay backdrop */
+  .payslip-modal-backdrop,
+  [data-testid="modal-backdrop"] {
+    position: static !important;
+    background: transparent !important;
+    backdrop-filter: none !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    width: 100% !important;
+    display: block !important;
+    box-shadow: none !important;
+  }
+
+  /* Payslip card formatted as full-page clean official document */
+  .payslip-modal-card {
+    position: static !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    max-height: none !important;
+    height: auto !important;
+    overflow: visible !important;
+    background: #ffffff !important;
+    color: #0f172a !important;
+    border: 1px solid #cbd5e1 !important;
+    border-radius: 8px !important;
+    box-shadow: none !important;
+    padding: 0 !important;
+    transform: none !important;
+    animation: none !important;
+  }
+
+  .payslip-body,
+  .printable-payslip-content {
+    padding: 24px !important;
+    overflow: visible !important;
+    color: #0f172a !important;
+    background: #ffffff !important;
+  }
+
+  /* High-contrast official document typography */
+  .payslip-heading {
+    color: #0f172a !important;
+    font-size: 13pt !important;
+    font-weight: 700 !important;
+  }
+
+  .payslip-subtext,
+  .payslip-label,
+  .payslip-period-info p,
+  .payslip-ref,
+  .payslip-col-unit,
+  .payslip-item-desc {
+    color: #64748b !important;
+  }
+
+  .payslip-value,
+  .payslip-ref-code,
+  .payslip-data,
+  .payslip-col-title,
+  .payslip-item-name,
+  .payslip-item-amount,
+  .payslip-total-label,
+  .payslip-total-value {
+    color: #0f172a !important;
+    font-weight: 600 !important;
+  }
+
+  .payslip-icon {
+    color: #0284c7 !important;
+  }
+
+  /* Crisp light borders for sections */
+  .payslip-section,
+  .payslip-col-header,
+  .payslip-total-row,
+  .payslip-rows > div {
+    border-color: #e2e8f0 !important;
+  }
+
+  /* Employee metadata summary box */
+  .payslip-info-box {
+    background: #f8fafc !important;
+    border: 1px solid #e2e8f0 !important;
+  }
+
+  /* Earnings & Deductions Tables */
+  .payslip-tables {
+    gap: 20px !important;
+  }
+
+  .payslip-item-name.text-emerald-400,
+  .payslip-item-amount.text-emerald-400 {
+    color: #059669 !important;
+  }
+
+  .payslip-item-name.text-cyan-300,
+  .payslip-item-amount.text-cyan-300 {
+    color: #0284c7 !important;
+  }
+
+  .payslip-deduction-amount {
+    color: #dc2626 !important;
+  }
+
+  /* Net Pay Callout Box */
+  .payslip-net-box {
+    background: #f0fdf4 !important;
+    border: 1.5px solid #86efac !important;
+  }
+
+  .payslip-net-icon {
+    background: #dcfce7 !important;
+    border-color: #86efac !important;
+    color: #16a34a !important;
+  }
+
+  .payslip-disbursed-note {
+    color: #475569 !important;
+  }
+
+  .payslip-net-amount {
+    color: #15803d !important;
+    font-size: 18pt !important;
+  }
+
+  .payslip-audited-note {
+    color: #16a34a !important;
+  }
+
+  /* Footer compliance notice */
+  .payslip-footer-note {
+    color: #94a3b8 !important;
+    border-top: 1px solid #f1f5f9 !important;
+    padding-top: 12px !important;
+    font-size: 9pt !important;
+  }
 }

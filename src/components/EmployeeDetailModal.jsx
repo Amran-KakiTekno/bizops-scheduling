@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import AccessibleModal from './AccessibleModal';
 import { 
   X, 
   User, 
@@ -11,25 +12,44 @@ import {
   AlertTriangle, 
   Award, 
   Clock, 
-  DollarSign,
-  FileText
+  DollarSign, 
+  FileText 
 } from 'lucide-react';
 
 export default function EmployeeDetailModal({ employee, onClose, onViewPayslip }) {
+  useEffect(() => {
+    const handleKeyDown = (e) => {
+      if (e.key === 'Escape') {
+        onClose();
+      }
+    };
+    document.addEventListener('keydown', handleKeyDown);
+    document.body.style.overflow = 'hidden';
+
+    return () => {
+      document.removeEventListener('keydown', handleKeyDown);
+      document.body.style.overflow = 'unset';
+    };
+  }, [onClose]);
+
   if (!employee) return null;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-sm animate-in fade-in">
-      <div className="bg-slate-900 border border-slate-800 rounded-2xl w-full max-w-2xl shadow-2xl overflow-hidden flex flex-col max-h-[90vh]">
-        {/* Header */}
-        <div className="p-6 border-b border-slate-800 bg-slate-950/60 flex items-start justify-between">
-          <div className="flex items-center gap-4">
-            <div className="w-14 h-14 rounded-2xl bg-cyan-500/10 border border-cyan-500/30 text-cyan-300 flex items-center justify-center font-bold text-lg font-mono">
-              {employee.avatar}
-            </div>
-            <div>
-              <div className="flex items-center gap-2">
-                <h2 className="text-lg font-bold text-white">{employee.name}</h2>
+    <AccessibleModal
+      isOpen={Boolean(employee)}
+      onClose={onClose}
+      titleId={`emp-detail-title-${employee.id}`}
+      maxWidth="max-w-2xl"
+    >
+      {/* Header */}
+      <div className="p-6 border-b border-slate-800 bg-slate-950/60 flex items-start justify-between">
+        <div className="flex items-center gap-4">
+          <div className="w-14 h-14 rounded-2xl bg-cyan-500/10 border border-cyan-500/30 text-cyan-300 flex items-center justify-center font-bold text-lg font-mono">
+            {employee.avatar}
+          </div>
+          <div>
+            <div className="flex items-center gap-2">
+              <h2 id={`emp-detail-title-${employee.id}`} className="text-lg font-bold text-white">{employee.name}</h2>
                 <span className="text-[11px] font-mono px-2 py-0.5 rounded-full bg-slate-800 text-slate-300 border border-slate-700">
                   {employee.id}
                 </span>
@@ -47,6 +67,7 @@ export default function EmployeeDetailModal({ employee, onClose, onViewPayslip }
 
           <button 
             onClick={onClose}
+            aria-label="Close modal"
             className="p-1.5 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg transition-colors"
           >
             <X className="w-5 h-5" />
@@ -194,7 +215,6 @@ export default function EmployeeDetailModal({ employee, onClose, onViewPayslip }
             </button>
           </div>
         </div>
-      </div>
-    </div>
+    </AccessibleModal>
   );
 }

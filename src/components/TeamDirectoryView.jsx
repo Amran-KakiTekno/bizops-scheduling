@@ -65,54 +65,77 @@ export default function TeamDirectoryView({
 
       {/* Directory Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-        {filtered.map(emp => {
-          const hasExpiringCert = emp.certifications?.some(c => c.badge === 'amber' || c.badge === 'red');
-
-          return (
-            <div
-              key={emp.id}
-              className="p-5 rounded-2xl bg-slate-900 border border-slate-800 hover:border-slate-700 transition-all space-y-4 flex flex-col justify-between"
+        {filtered.length === 0 ? (
+          <div className="col-span-full p-8 text-center bg-slate-900 border border-slate-800 rounded-2xl space-y-3">
+            <div className="w-12 h-12 rounded-full bg-slate-800 text-slate-400 mx-auto flex items-center justify-center">
+              <Users className="w-6 h-6" />
+            </div>
+            <div>
+              <p className="text-sm font-semibold text-white">No team members match your search</p>
+              <p className="text-xs text-slate-400 mt-1">
+                No active staff found matching "{search}" {deptFilter !== 'All' ? `in ${deptFilter}` : ''}.
+              </p>
+            </div>
+            <button
+              type="button"
+              onClick={() => {
+                setSearch('');
+                setDeptFilter('All');
+              }}
+              className="px-3.5 py-1.5 rounded-lg bg-cyan-600/20 text-cyan-300 border border-cyan-500/30 text-xs font-medium hover:bg-cyan-600/30 transition-colors"
             >
-              <div>
-                {/* Card Top */}
-                <div className="flex items-start justify-between gap-3">
-                  <div className="flex items-center gap-3">
-                    <div className="w-12 h-12 rounded-xl bg-slate-800 border border-slate-700 text-white flex items-center justify-center font-bold text-sm font-mono shadow-inner">
-                      {emp.avatar}
+              Reset Search Filters
+            </button>
+          </div>
+        ) : (
+          filtered.map(emp => {
+            const hasExpiringCert = emp.certifications?.some(c => c.badge === 'amber' || c.badge === 'red');
+
+            return (
+              <div
+                key={emp.id}
+                className="p-5 rounded-2xl bg-slate-900 border border-slate-800 hover:border-slate-700 transition-all space-y-4 flex flex-col justify-between"
+              >
+                <div>
+                  {/* Card Top */}
+                  <div className="flex items-start justify-between gap-3">
+                    <div className="flex items-center gap-3">
+                      <div className="w-12 h-12 rounded-xl bg-slate-800 border border-slate-700 text-white flex items-center justify-center font-bold text-sm font-mono shadow-inner">
+                        {emp.avatar}
+                      </div>
+                      <div>
+                        <div className="flex items-center gap-2">
+                          <h4 className="font-bold text-white text-sm hover:text-cyan-300 transition-colors cursor-pointer" onClick={() => onSelectEmployee(emp)}>
+                            {emp.name}
+                          </h4>
+                        </div>
+                        <p className="text-xs text-slate-400">{emp.role}</p>
+                        <span className="text-[10px] font-mono text-cyan-400 mt-0.5 inline-block">
+                          {emp.department}
+                        </span>
+                      </div>
+                    </div>
+
+                    <span className={`text-[10px] font-medium px-2 py-0.5 rounded border ${
+                      emp.status === 'Active' 
+                        ? 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20' 
+                        : 'bg-amber-500/10 text-amber-400 border-amber-500/20'
+                    }`}>
+                      {emp.status}
+                    </span>
+                  </div>
+
+                  {/* Key Metrics */}
+                  <div className="grid grid-cols-2 gap-2 my-3 p-2.5 rounded-xl bg-slate-950/60 border border-slate-800/80 text-[11px] font-mono">
+                    <div>
+                      <span className="text-slate-500 text-[10px] uppercase font-sans">Base Wage</span>
+                      <p className="text-emerald-400 font-semibold mt-0.5">RM {emp.rate}/hr</p>
                     </div>
                     <div>
-                      <div className="flex items-center gap-2">
-                        <h4 className="font-bold text-white text-sm hover:text-cyan-300 transition-colors cursor-pointer" onClick={() => onSelectEmployee(emp)}>
-                          {emp.name}
-                        </h4>
-                      </div>
-                      <p className="text-xs text-slate-400">{emp.role}</p>
-                      <span className="text-[10px] font-mono text-cyan-400 mt-0.5 inline-block">
-                        {emp.department}
-                      </span>
+                      <span className="text-slate-500 text-[10px] uppercase font-sans">Leave Avail</span>
+                      <p className="text-cyan-300 font-semibold mt-0.5">{emp.leaveBalances?.annual || 0} AL • {emp.leaveBalances?.medical || 0} MC</p>
                     </div>
                   </div>
-
-                  <span className={`text-[10px] font-medium px-2 py-0.5 rounded border ${
-                    emp.status === 'Active' 
-                      ? 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20' 
-                      : 'bg-amber-500/10 text-amber-400 border-amber-500/20'
-                  }`}>
-                    {emp.status}
-                  </span>
-                </div>
-
-                {/* Key Metrics */}
-                <div className="grid grid-cols-2 gap-2 my-3 p-2.5 rounded-xl bg-slate-950/60 border border-slate-800/80 text-[11px] font-mono">
-                  <div>
-                    <span className="text-slate-500 text-[10px] uppercase font-sans">Base Wage</span>
-                    <p className="text-emerald-400 font-semibold mt-0.5">${emp.rate}/hr</p>
-                  </div>
-                  <div>
-                    <span className="text-slate-500 text-[10px] uppercase font-sans">Leave Avail</span>
-                    <p className="text-cyan-300 font-semibold mt-0.5">{emp.leaveBalances?.annual || 0} AL • {emp.leaveBalances?.medical || 0} MC</p>
-                  </div>
-                </div>
 
                 {/* Compliance Badges */}
                 <div className="space-y-1.5">
@@ -127,7 +150,7 @@ export default function TeamDirectoryView({
                           c.badge === 'emerald'
                             ? 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20'
                             : c.badge === 'amber'
-                            ? 'bg-amber-500/10 text-amber-400 border-amber-500/20 animate-pulse'
+                            ? 'bg-amber-500/10 text-amber-400 border-amber-500/20 motion-safe:animate-pulse'
                             : 'bg-rose-500/10 text-rose-400 border-rose-500/20'
                         }`}
                         title={`Expires: ${c.expiry}`}
@@ -160,8 +183,8 @@ export default function TeamDirectoryView({
                 </button>
               </div>
             </div>
-          );
-        })}
+            );
+          }))}
       </div>
     </div>
   );

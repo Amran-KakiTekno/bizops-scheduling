@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import AccessibleModal from './AccessibleModal';
 import { 
   Calendar, 
   FileText, 
@@ -10,7 +11,8 @@ import {
   Plus, 
   Eye, 
   Clock, 
-  Paperclip
+  Paperclip,
+  X
 } from 'lucide-react';
 
 export default function LeaveClaimsView({ 
@@ -23,6 +25,8 @@ export default function LeaveClaimsView({
 }) {
   const [activeSection, setActiveSection] = useState('leave');
   const [selectedReceipt, setSelectedReceipt] = useState(null);
+  const [rejectingLeave, setRejectingLeave] = useState(null);
+  const [rejectionReason, setRejectionReason] = useState('');
 
   const pendingLeaves = leaveRequests.filter(l => l.status === 'Pending');
   const pendingClaims = claims.filter(c => c.status === 'Pending');
@@ -167,14 +171,29 @@ export default function LeaveClaimsView({
                   </div>
                 </div>
 
+                {/* Manager Rejection Feedback Note (if declined) */}
+                {req.status === 'Rejected' && (
+                  <div className="p-3 rounded-xl bg-rose-950/20 border border-rose-500/20 text-xs text-rose-300 flex items-start gap-2.5">
+                    <AlertCircle className="w-4 h-4 text-rose-400 shrink-0 mt-0.5" />
+                    <div>
+                      <span className="font-semibold text-rose-200">Manager Rejection Feedback:</span>
+                      <p className="text-slate-300 mt-0.5">{req.rejectionReason || 'Operational shift requirements / staffing constraint.'}</p>
+                    </div>
+                  </div>
+                )}
+
                 {/* Actions */}
                 {req.status === 'Pending' && (
                   <div className="flex items-center justify-end gap-2 pt-2 border-t border-slate-800/60">
                     <button
-                      onClick={() => onRejectLeave(req.id)}
-                      className="px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs font-medium transition-colors border border-slate-700"
+                      onClick={() => {
+                        setRejectingLeave(req);
+                        setRejectionReason('');
+                      }}
+                      className="px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-rose-950/50 text-slate-300 hover:text-rose-300 text-xs font-medium transition-colors border border-slate-700 hover:border-rose-500/30 flex items-center gap-1.5"
                     >
-                      Decline
+                      <XCircle className="w-3.5 h-3.5 text-rose-400" />
+                      <span>Decline...</span>
                     </button>
                     <button
                       onClick={() => onApproveLeave(req.id)}
@@ -204,7 +223,7 @@ export default function LeaveClaimsView({
             <div className="px-3 py-1.5 rounded-lg bg-slate-950 border border-slate-800 text-xs font-mono">
               <span className="text-slate-400">Total Pending: </span>
               <span className="text-cyan-400 font-bold">
-                ${pendingClaims.reduce((acc, c) => acc + c.amount, 0).toFixed(2)}
+                RM {pendingClaims.reduce((acc, c) => acc + c.amount, 0).toFixed(2)}
               </span>
             </div>
           </div>
@@ -236,7 +255,7 @@ export default function LeaveClaimsView({
 
                   <div className="flex items-center justify-between md:justify-end gap-6">
                     <div className="text-right">
-                      <span className="text-base font-bold font-mono text-emerald-400">${claim.amount.toFixed(2)}</span>
+                      <span className="text-base font-bold font-mono text-emerald-400">RM {claim.amount.toFixed(2)}</span>
                       <p className="text-[10px] text-slate-500 font-mono">{claim.receipt}</p>
                     </div>
 
@@ -262,6 +281,122 @@ export default function LeaveClaimsView({
             </div>
           </div>
         </div>
+      )}
+
+      {/* Accessible Leave Rejection Modal with Feedback */}
+      {rejectingLeave && (
+        <AccessibleModal
+          isOpen={Boolean(rejectingLeave)}
+          onClose={() => {
+            setRejectingLeave(null);
+            setRejectionReason('');
+          }}
+          titleId="reject-leave-modal-title"
+          maxWidth="max-w-md"
+        >
+          {/* Modal Header */}
+          <div className="p-5 border-b border-slate-800 bg-slate-950/60 flex items-start justify-between">
+            <div className="flex items-center gap-3">
+              <div className="w-9 h-9 rounded-xl bg-rose-500/10 border border-rose-500/20 text-rose-400 flex items-center justify-center">
+                <XCircle className="w-5 h-5" />
+              </div>
+              <div>
+                <h3 id="reject-leave-modal-title" className="font-bold text-sm text-white">Decline Leave Request</h3>
+                <p className="text-xs text-slate-400 mt-0.5">
+                  {rejectingLeave.name} • <span className="text-cyan-400">{rejectingLeave.type}</span>
+                </p>
+              </div>
+            </div>
+            <button
+              onClick={() => {
+                setRejectingLeave(null);
+                setRejectionReason('');
+              }}
+              aria-label="Close modal"
+              className="p-1.5 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg transition-colors"
+            >
+              <X className="w-4 h-4" />
+            </button>
+          </div>
+
+          {/* Modal Body */}
+          <div className="p-5 space-y-4 text-xs text-slate-300">
+            <div className="p-3 rounded-xl bg-slate-950/60 border border-slate-800 space-y-1">
+              <div className="flex justify-between text-[11px]">
+                <span className="text-slate-400">Requested Period:</span>
+                <span className="font-mono text-white">{rejectingLeave.dates}</span>
+              </div>
+              <div className="flex justify-between text-[11px]">
+                <span className="text-slate-400">Employee Reason:</span>
+                <span className="text-slate-300 italic">"{rejectingLeave.reason}"</span>
+              </div>
+            </div>
+
+            <div className="space-y-1.5">
+              <label className="block font-medium text-white text-xs">
+                Constructive Rejection Feedback <span className="text-slate-400 font-normal">(Optional)</span>
+              </label>
+              <textarea
+                value={rejectionReason}
+                onChange={(e) => setRejectionReason(e.target.value)}
+                placeholder="Specify reason or instructions (e.g., Short-staffed during peak shift; please coordinate a shift swap with Jordan or reapply for next week)."
+                rows={3}
+                className="w-full rounded-xl bg-slate-950 border border-slate-800 p-3 text-white text-xs placeholder:text-slate-500 focus:border-rose-500 focus:ring-1 focus:ring-rose-500/20 focus:outline-none transition-colors resize-none"
+              />
+            </div>
+
+            {/* Quick Reason Chips */}
+            <div className="space-y-1.5">
+              <span className="text-[10px] text-slate-400 uppercase tracking-wider font-semibold">Quick Reason Suggestions:</span>
+              <div className="flex flex-wrap gap-1.5">
+                {[
+                  'Critical shift understaffed',
+                  'Insufficient leave balance',
+                  'Advance notice required (>48h)',
+                  'Blackout date for retail event',
+                  'Please coordinate peer shift swap'
+                ].map((chip) => (
+                  <button
+                    key={chip}
+                    type="button"
+                    onClick={() => setRejectionReason(chip)}
+                    className="px-2.5 py-1 rounded-lg bg-slate-950 hover:bg-slate-800 text-slate-300 hover:text-white border border-slate-800 text-[11px] transition-colors"
+                  >
+                    {chip}
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            <p className="text-[11px] text-slate-500 leading-relaxed">
+              This note will be communicated back to {rejectingLeave.name} in their self-service notification feed.
+            </p>
+          </div>
+
+          {/* Modal Footer */}
+          <div className="p-4 border-t border-slate-800 bg-slate-950/60 flex items-center justify-end gap-2">
+            <button
+              onClick={() => {
+                setRejectingLeave(null);
+                setRejectionReason('');
+              }}
+              className="px-3.5 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs font-medium transition-colors"
+            >
+              Cancel
+            </button>
+            <button
+              onClick={() => {
+                onRejectLeave(rejectingLeave.id, rejectionReason.trim());
+                setRejectingLeave(null);
+                setRejectionReason('');
+              }}
+              className="px-4 py-1.5 rounded-lg bg-rose-600 hover:bg-rose-500 text-white text-xs font-medium transition-colors shadow-lg shadow-rose-600/20 flex items-center gap-1.5"
+            >
+              <XCircle className="w-3.5 h-3.5" />
+              <span>Confirm Decline</span>
+            </button>
+          </div>
+        </AccessibleModal>
       )}
     </div>
   );

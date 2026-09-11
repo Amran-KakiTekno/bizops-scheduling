@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { 
   Clock, 
   MapPin, 
@@ -7,8 +7,10 @@ import {
   ShieldCheck, 
   CheckCheck, 
   SlidersHorizontal,
-  FileCheck
+  FileCheck,
+  X
 } from 'lucide-react';
+import GeofenceRadarWidget from './GeofenceRadarWidget';
 
 export default function AttendanceView({ 
   attendanceList, 
@@ -17,6 +19,24 @@ export default function AttendanceView({
   onSelectEmployee 
 }) {
   const [filter, setFilter] = useState('all');
+  const [showConfirmReconcile, setShowConfirmReconcile] = useState(false);
+
+  useEffect(() => {
+    if (!showConfirmReconcile) return;
+
+    const handleKeyDown = (e) => {
+      if (e.key === 'Escape') {
+        setShowConfirmReconcile(false);
+      }
+    };
+    document.addEventListener('keydown', handleKeyDown);
+    document.body.style.overflow = 'hidden';
+
+    return () => {
+      document.removeEventListener('keydown', handleKeyDown);
+      document.body.style.overflow = 'unset';
+    };
+  }, [showConfirmReconcile]);
 
   const filteredList = attendanceList.filter(item => {
     if (filter === 'pending') return !item.reconciled;
@@ -29,65 +49,71 @@ export default function AttendanceView({
 
   return (
     <div className="space-y-6">
-      {/* KPI Cards */}
-      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
-        <div className="p-4 rounded-xl bg-slate-900 border border-slate-800 space-y-1">
-          <span className="text-xs text-slate-400">Currently On Floor</span>
-          <div className="text-xl font-bold font-mono text-cyan-400 flex items-center gap-2">
-            <span className="w-2.5 h-2.5 rounded-full bg-cyan-400 animate-pulse"></span>
-            {activeOnShift} Clocked In
+      {/* Geofence Radar Widget & KPI Bento Grid */}
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-4">
+        <div className="lg:col-span-4">
+          <GeofenceRadarWidget />
+        </div>
+
+        <div className="lg:col-span-8 grid grid-cols-2 sm:grid-cols-2 gap-3">
+          <div className="p-4 rounded-xl bg-zinc-950/80 border border-white/[0.08] shadow-rim hover:border-white/[0.16] transition-all space-y-1">
+            <span className="text-[11px] font-mono uppercase tracking-wider text-zinc-400">Currently On Floor</span>
+            <div className="text-xl font-bold font-mono tabular-nums text-cyan-400 flex items-center gap-2">
+              <span className="w-2 h-2 rounded-full bg-cyan-400 motion-safe:animate-pulse"></span>
+              {activeOnShift} Clocked In
+            </div>
+            <p className="text-[10px] font-mono text-zinc-500">Live GPS ping verified</p>
           </div>
-          <p className="text-[11px] text-slate-500">Live GPS ping verified</p>
-        </div>
 
-        <div className="p-4 rounded-xl bg-slate-900 border border-slate-800 space-y-1">
-          <span className="text-xs text-slate-400">Geofence Compliance</span>
-          <div className="text-xl font-bold font-mono text-emerald-400">100% Passed</div>
-          <p className="text-[11px] text-slate-500">Zero offsite punches detected</p>
-        </div>
+          <div className="p-4 rounded-xl bg-zinc-950/80 border border-white/[0.08] shadow-rim hover:border-white/[0.16] transition-all space-y-1">
+            <span className="text-[11px] font-mono uppercase tracking-wider text-zinc-400">Geofence Compliance</span>
+            <div className="text-xl font-bold font-mono tabular-nums text-emerald-400">100% Passed</div>
+            <p className="text-[10px] font-mono text-zinc-500">Zero offsite punches detected</p>
+          </div>
 
-        <div className="p-4 rounded-xl bg-slate-900 border border-slate-800 space-y-1">
-          <span className="text-xs text-slate-400">Timesheets Pending Review</span>
-          <div className="text-xl font-bold font-mono text-amber-400">{pendingCount} Records</div>
-          <p className="text-[11px] text-slate-500">Scheduled vs actual comparison</p>
-        </div>
+          <div className="p-4 rounded-xl bg-zinc-950/80 border border-white/[0.08] shadow-rim hover:border-white/[0.16] transition-all space-y-1">
+            <span className="text-[11px] font-mono uppercase tracking-wider text-zinc-400">Pending Review</span>
+            <div className="text-xl font-bold font-mono tabular-nums text-amber-400">{pendingCount} Records</div>
+            <p className="text-[10px] font-mono text-zinc-500">Scheduled vs actual comparison</p>
+          </div>
 
-        <div className="p-4 rounded-xl bg-slate-900 border border-slate-800 space-y-1">
-          <span className="text-xs text-slate-400">Punctuality Score</span>
-          <div className="text-xl font-bold font-mono text-white">96.2%</div>
-          <p className="text-[11px] text-slate-500">1 shift arrival &gt; 10m grace</p>
+          <div className="p-4 rounded-xl bg-zinc-950/80 border border-white/[0.08] shadow-rim hover:border-white/[0.16] transition-all space-y-1">
+            <span className="text-[11px] font-mono uppercase tracking-wider text-zinc-400">Punctuality Score</span>
+            <div className="text-xl font-bold font-mono tabular-nums text-zinc-100">96.2%</div>
+            <p className="text-[10px] font-mono text-zinc-500">1 shift arrival &gt; 10m grace</p>
+          </div>
         </div>
       </div>
 
       {/* Main Table Container */}
-      <div className="rounded-xl bg-slate-900 border border-slate-800 overflow-hidden">
+      <div className="rounded-2xl bg-zinc-950/80 border border-white/[0.08] shadow-rim overflow-hidden">
         {/* Table Controls */}
-        <div className="p-4 border-b border-slate-800 flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-slate-950/40">
+        <div className="p-4 border-b border-white/[0.08] flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-black/40">
           <div>
-            <h3 className="text-sm font-semibold text-white">Timesheet Punch Audit & Reconciliation</h3>
-            <p className="text-xs text-slate-400 mt-0.5">
+            <h3 className="text-sm font-semibold text-zinc-100">Timesheet Punch Audit & Reconciliation</h3>
+            <p className="text-xs text-zinc-400 mt-0.5">
               Verify mobile geofence punches against rostered hours before pushing to payroll.
             </p>
           </div>
 
           <div className="flex items-center gap-2.5">
             {/* Filter Pills */}
-            <div className="flex bg-slate-950 p-1 rounded-lg border border-slate-800 text-[11px]">
+            <div className="flex bg-black p-1 rounded-xl border border-white/[0.08] text-[11px] shadow-rim">
               <button 
                 onClick={() => setFilter('all')}
-                className={`px-2.5 py-1 rounded-md transition-colors ${filter === 'all' ? 'bg-slate-800 text-white font-medium' : 'text-slate-400 hover:text-white'}`}
+                className={`px-2.5 py-1 rounded-lg transition-colors cursor-pointer ${filter === 'all' ? 'bg-zinc-900 text-white font-medium border border-white/[0.08]' : 'text-zinc-400 hover:text-white'}`}
               >
                 All ({attendanceList.length})
               </button>
               <button 
                 onClick={() => setFilter('pending')}
-                className={`px-2.5 py-1 rounded-md transition-colors ${filter === 'pending' ? 'bg-slate-800 text-amber-300 font-medium' : 'text-slate-400 hover:text-white'}`}
+                className={`px-2.5 py-1 rounded-lg transition-colors cursor-pointer ${filter === 'pending' ? 'bg-zinc-900 text-amber-300 font-medium border border-white/[0.08]' : 'text-zinc-400 hover:text-white'}`}
               >
                 Pending ({pendingCount})
               </button>
               <button 
                 onClick={() => setFilter('reconciled')}
-                className={`px-2.5 py-1 rounded-md transition-colors ${filter === 'reconciled' ? 'bg-slate-800 text-emerald-300 font-medium' : 'text-slate-400 hover:text-white'}`}
+                className={`px-2.5 py-1 rounded-lg transition-colors cursor-pointer ${filter === 'reconciled' ? 'bg-zinc-900 text-emerald-300 font-medium border border-white/[0.08]' : 'text-zinc-400 hover:text-white'}`}
               >
                 Approved
               </button>
@@ -95,8 +121,8 @@ export default function AttendanceView({
 
             {pendingCount > 0 && (
               <button
-                onClick={onReconcileAll}
-                className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-medium transition-colors shadow-lg shadow-emerald-600/20"
+                onClick={() => setShowConfirmReconcile(true)}
+                className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-medium transition-colors shadow-md shadow-emerald-600/20 cursor-pointer"
               >
                 <CheckCheck className="w-3.5 h-3.5" />
                 <span>Approve All</span>
@@ -106,7 +132,7 @@ export default function AttendanceView({
         </div>
 
         {/* Table Rows */}
-        <div className="divide-y divide-slate-800/70 text-xs">
+        <div className="divide-y divide-white/[0.04] text-xs">
           {filteredList.map((item) => (
             <div 
               key={item.id} 
@@ -190,6 +216,96 @@ export default function AttendanceView({
           )}
         </div>
       </div>
+
+      {/* Confirmation Modal for Bulk Timesheet Reconciliation */}
+      {showConfirmReconcile && (
+        <div 
+          className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-sm animate-in fade-in"
+          onClick={(e) => { if (e.target === e.currentTarget) setShowConfirmReconcile(false); }}
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby="reconcile-modal-title"
+        >
+          <div className="bg-slate-900 border border-slate-700/80 rounded-2xl w-full max-w-lg shadow-2xl overflow-hidden animate-in zoom-in-95">
+            {/* Modal Header */}
+            <div className="p-5 border-b border-slate-800 bg-slate-950/60 flex items-center justify-between">
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 rounded-xl bg-cyan-500/10 border border-cyan-500/20 text-cyan-400 flex items-center justify-center">
+                  <CheckCheck className="w-5 h-5" />
+                </div>
+                <div>
+                  <h3 id="reconcile-modal-title" className="text-sm sm:text-base font-bold text-white">
+                    Confirm Bulk Timesheet Reconciliation
+                  </h3>
+                  <p className="text-xs text-slate-400">Batch approval for active pay period</p>
+                </div>
+              </div>
+              <button
+                onClick={() => setShowConfirmReconcile(false)}
+                aria-label="Close modal"
+                className="p-1.5 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg transition-colors"
+              >
+                <X className="w-4 h-4" />
+              </button>
+            </div>
+
+            {/* Modal Body */}
+            <div className="p-6 space-y-4 text-xs">
+              <div className="p-3.5 rounded-xl bg-cyan-500/10 border border-cyan-500/20 text-slate-300 leading-relaxed">
+                <p className="text-white font-medium mb-1 flex items-center gap-2">
+                  <span className="w-2 h-2 rounded-full bg-cyan-400"></span>
+                  Reconciling <strong className="text-cyan-300 font-bold">{pendingCount}</strong> Pending Records
+                </p>
+                <p className="text-[11px] text-slate-300">
+                  Are you sure you want to approve and reconcile all <strong className="text-white">{pendingCount}</strong> pending timesheets in bulk?
+                  Once approved, geofence punches, standard shift hours, and overtime variances will be locked and synchronized directly into active payroll.
+                </p>
+              </div>
+
+              <div className="p-4 rounded-xl bg-slate-950/80 border border-slate-800 space-y-2 text-[11px] font-mono">
+                <div className="flex justify-between items-center text-slate-400 font-sans">
+                  <span>Batch Scope:</span>
+                  <span className="text-white font-medium">All Unapproved Timesheets</span>
+                </div>
+                <div className="flex justify-between items-center text-slate-400 font-sans">
+                  <span>Pending Timesheets:</span>
+                  <span className="text-amber-400 font-bold">{pendingCount} Records</span>
+                </div>
+                <div className="flex justify-between items-center text-slate-400 font-sans">
+                  <span>Destination Ledger:</span>
+                  <span className="text-cyan-300">October Cycle 1 Payroll</span>
+                </div>
+              </div>
+
+              <p className="text-[11px] text-slate-500">
+                You can also cancel and review individual employee timesheets before running bulk reconciliation.
+              </p>
+            </div>
+
+            {/* Modal Actions */}
+            <div className="px-6 py-4 border-t border-slate-800 bg-slate-950/50 flex items-center justify-end gap-2.5">
+              <button
+                type="button"
+                onClick={() => setShowConfirmReconcile(false)}
+                className="px-4 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs font-medium transition-colors border border-slate-700"
+              >
+                Cancel
+              </button>
+              <button
+                type="button"
+                onClick={() => {
+                  setShowConfirmReconcile(false);
+                  onReconcileAll();
+                }}
+                className="px-4 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-semibold transition-colors shadow-lg shadow-emerald-600/20 flex items-center gap-1.5"
+              >
+                <CheckCheck className="w-3.5 h-3.5" />
+                <span>Confirm Reconciliation</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

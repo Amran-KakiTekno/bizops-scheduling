@@ -179,18 +179,18 @@ export const initialRosterDays = [
 
 export const dayShiftsData = {
   Fri: [
-    { id: 'S-1', empId: 'EMP-101', name: 'Marcus Sterling', role: 'Floor Lead / Barista', time: '06:30 - 14:30', hours: 8.0, wage: '$176', badge: 'bg-cyan-500/10 border-cyan-500/20 text-cyan-400', station: 'Espresso Bar 1' },
-    { id: 'S-2', empId: 'EMP-102', name: 'Maya Rodriguez', role: 'Senior Barista', time: '07:00 - 15:00', hours: 8.0, wage: '$152', badge: 'bg-indigo-500/10 border-indigo-500/20 text-indigo-400', station: 'Espresso Bar 2' },
-    { id: 'S-3', empId: 'EMP-103', name: 'Alex Chen', role: 'Kitchen Prep Lead', time: '08:00 - 16:30', hours: 8.5, wage: '$170', badge: 'bg-emerald-500/10 border-emerald-500/20 text-emerald-400', station: 'Hot Kitchen' },
-    { id: 'S-4', empId: 'EMP-104', name: 'Jordan Kim', role: 'Barista / Register', time: '14:00 - 22:00', hours: 8.0, wage: '$144', badge: 'bg-indigo-500/10 border-indigo-500/20 text-indigo-400', station: 'Front POS' },
-    { id: 'S-5', empId: 'EMP-105', name: 'Taylor Smith', role: 'Closing Supervisor', time: '15:30 - 23:30', hours: 8.0, wage: '$176', badge: 'bg-amber-500/10 border-amber-500/20 text-amber-400', station: 'Store Close & Cash' },
-    { id: 'S-6', empId: 'EMP-107', name: 'David Tan', role: 'Barista & Cashier', time: '10:00 - 18:00', hours: 8.0, wage: '$136', badge: 'bg-cyan-500/10 border-cyan-500/20 text-cyan-400', station: 'Drive-Thru Window' }
+    { id: 'S-1', empId: 'EMP-101', name: 'Marcus Sterling', role: 'Floor Lead / Barista', time: '06:30 - 14:30', hours: 8.0, wage: 'RM 176', badge: 'bg-cyan-500/10 border-cyan-500/20 text-cyan-400', station: 'Espresso Bar 1' },
+    { id: 'S-2', empId: 'EMP-102', name: 'Maya Rodriguez', role: 'Senior Barista', time: '07:00 - 15:00', hours: 8.0, wage: 'RM 152', badge: 'bg-indigo-500/10 border-indigo-500/20 text-indigo-400', station: 'Espresso Bar 2' },
+    { id: 'S-3', empId: 'EMP-103', name: 'Alex Chen', role: 'Kitchen Prep Lead', time: '08:00 - 16:30', hours: 8.5, wage: 'RM 170', badge: 'bg-emerald-500/10 border-emerald-500/20 text-emerald-400', station: 'Hot Kitchen' },
+    { id: 'S-4', empId: 'EMP-104', name: 'Jordan Kim', role: 'Barista / Register', time: '14:00 - 22:00', hours: 8.0, wage: 'RM 144', badge: 'bg-indigo-500/10 border-indigo-500/20 text-indigo-400', station: 'Front POS' },
+    { id: 'S-5', empId: 'EMP-105', name: 'Taylor Smith', role: 'Closing Supervisor', time: '15:30 - 23:30', hours: 8.0, wage: 'RM 176', badge: 'bg-amber-500/10 border-amber-500/20 text-amber-400', station: 'Store Close & Cash' },
+    { id: 'S-6', empId: 'EMP-107', name: 'David Tan', role: 'Barista & Cashier', time: '10:00 - 18:00', hours: 8.0, wage: 'RM 136', badge: 'bg-cyan-500/10 border-cyan-500/20 text-cyan-400', station: 'Drive-Thru Window' }
   ],
   Sat: [
-    { id: 'S-7', empId: 'EMP-101', name: 'Marcus Sterling', role: 'Floor Lead / Barista', time: '07:00 - 15:30', hours: 8.5, wage: '$187', badge: 'bg-cyan-500/10 border-cyan-500/20 text-cyan-400', station: 'Espresso Bar 1' },
-    { id: 'S-8', empId: 'EMP-102', name: 'Maya Rodriguez', role: 'Senior Barista', time: '14:00 - 22:00', hours: 8.0, wage: '$152', badge: 'bg-indigo-500/10 border-indigo-500/20 text-indigo-400', station: 'Espresso Bar 2' },
-    { id: 'S-9', empId: 'EMP-104', name: 'Jordan Kim', role: 'Barista / Register', time: '08:00 - 16:00', hours: 8.0, wage: '$144', badge: 'bg-indigo-500/10 border-indigo-500/20 text-indigo-400', station: 'Front POS' },
-    { id: 'S-10', empId: 'EMP-105', name: 'Taylor Smith', role: 'Closing Supervisor', time: '16:00 - 00:00', hours: 8.0, wage: '$176', badge: 'bg-amber-500/10 border-amber-500/20 text-amber-400', station: 'Store Close' }
+    { id: 'S-7', empId: 'EMP-101', name: 'Marcus Sterling', role: 'Floor Lead / Barista', time: '07:00 - 15:30', hours: 8.5, wage: 'RM 187', badge: 'bg-cyan-500/10 border-cyan-500/20 text-cyan-400', station: 'Espresso Bar 1' },
+    { id: 'S-8', empId: 'EMP-102', name: 'Maya Rodriguez', role: 'Senior Barista', time: '14:00 - 22:00', hours: 8.0, wage: 'RM 152', badge: 'bg-indigo-500/10 border-indigo-500/20 text-indigo-400', station: 'Espresso Bar 2' },
+    { id: 'S-9', empId: 'EMP-104', name: 'Jordan Kim', role: 'Barista / Register', time: '08:00 - 16:00', hours: 8.0, wage: 'RM 144', badge: 'bg-indigo-500/10 border-indigo-500/20 text-indigo-400', station: 'Front POS' },
+    { id: 'S-10', empId: 'EMP-105', name: 'Taylor Smith', role: 'Closing Supervisor', time: '16:00 - 00:00', hours: 8.0, wage: 'RM 176', badge: 'bg-amber-500/10 border-amber-500/20 text-amber-400', station: 'Store Close' }
   ]
 };
 

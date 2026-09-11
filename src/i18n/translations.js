@@ -1,0 +1,123 @@
+export const translations = {
+  en: {
+    // Brand & Top Navigation
+    suiteTitle: 'EziBiz',
+    hrmsTitle: 'HRMS',
+    appName: 'EziBiz HRMS & Workforce Ops',
+    tagline: 'Workforce Operations & Mobile ESS',
+    backToHub: 'Back to Hub',
+    settings: 'Settings',
+    mobileSimulator: 'Mobile ESS Simulator',
+    mobileShort: 'ESS',
+
+    // Primary Tabs
+    tabRoster: 'Shift Roster',
+    tabAttendance: 'Geo-Attendance',
+    tabLeaveClaims: 'Leave & Claims',
+    tabTeam: 'Team Directory',
+    tabPayroll: 'Payroll Runs',
+    tabSwaps: 'Shift Swaps',
+    tabRules: 'Compliance Rules',
+    tabMobile: 'Mobile ESS',
+
+    // KPI Metrics
+    kpiTeam: 'Total Enrolled Team',
+    kpiTeamSub: 'Active Staff Members',
+    kpiTimesheets: 'Timesheets to Reconcile',
+    kpiTimesheetsSub: 'Pending Clock-ins',
+    kpiLeave: 'Pending Leave Requests',
+    kpiLeaveSub: 'Requires Manager Review',
+    kpiPayroll: 'Monthly Net Payroll',
+    kpiPayrollSub: 'Direct Bank Transfer / FPX',
+
+    // Actions & Badges
+    active: 'Active',
+    pending: 'Pending',
+    approved: 'Approved',
+    rejected: 'Rejected',
+    clockIn: 'Clock In',
+    clockOut: 'Clock Out',
+    submitClaim: 'Submit Claim',
+    approveLeave: 'Approve Leave',
+    runPayroll: 'Run Payroll Cycle',
+
+    // Settings Modal
+    settingsTitle: 'HRMS Settings',
+    settingsSub: 'Customize your theme and language preferences.',
+    themeLabel: 'Theme Mode',
+    themeLight: 'Light Theme',
+    themeLightDesc: 'Clean, high-readability daylight palette (Default)',
+    themeDark: 'Dark Mode',
+    themeDarkDesc: 'High-contrast dark slate aesthetic',
+    languageLabel: 'Display Language',
+    langEn: 'English',
+    langEnDesc: 'Default interface language',
+    langMs: 'Bahasa Melayu',
+    langMsDesc: 'Antaramuka Bahasa Malaysia',
+    aboutVersion: 'Version',
+    aboutWorkspace: 'Active Workspace',
+    aboutDeploy: 'Deployment',
+    close: 'Close',
+  },
+
+  ms: {
+    // Brand & Top Navigation
+    suiteTitle: 'EziBiz',
+    hrmsTitle: 'HRMS',
+    appName: 'EziBiz HRMS & Operasi Staf',
+    tagline: 'Operasi Tenaga Kerja & ESS Mudah Alih',
+    backToHub: 'Kembali ke Hub',
+    settings: 'Tetapan',
+    mobileSimulator: 'Simulator ESS Mudah Alih',
+    mobileShort: 'ESS',
+
+    // Primary Tabs
+    tabRoster: 'Jadual Syif',
+    tabAttendance: 'Kehadiran Geo',
+    tabLeaveClaims: 'Cuti & Tuntutan',
+    tabTeam: 'Direktori Staf',
+    tabPayroll: 'Larian Gaji',
+    tabSwaps: 'Pertukaran Syif',
+    tabRules: 'Peraturan Pematuhan',
+    tabMobile: 'ESS Mudah Alih',
+
+    // KPI Metrics
+    kpiTeam: 'Jumlah Staf Berdaftar',
+    kpiTeamSub: 'Anggota Staf Aktif',
+    kpiTimesheets: 'Rekod Perlu Disahkan',
+    kpiTimesheetsSub: 'Log Masuk Menunggu',
+    kpiLeave: 'Permohonan Cuti Menunggu',
+    kpiLeaveSub: 'Perlu Semakan Pengurus',
+    kpiPayroll: 'Gaji Bersih Bulanan',
+    kpiPayrollSub: 'Pindahan Bank Terus / FPX',
+
+    // Actions & Badges
+    active: 'Aktif',
+    pending: 'Menunggu',
+    approved: 'Diluluskan',
+    rejected: 'Ditolak',
+    clockIn: 'Log Masuk',
+    clockOut: 'Log Keluar',
+    submitClaim: 'Hantar Tuntutan',
+    approveLeave: 'Luluskan Cuti',
+    runPayroll: 'Laksanakan Kitaran Gaji',
+
+    // Settings Modal
+    settingsTitle: 'Tetapan HRMS',
+    settingsSub: 'Sesuaikan pilihan tema dan bahasa.',
+    themeLabel: 'Mod Tema',
+    themeLight: 'Tema Cerah (Light)',
+    themeLightDesc: 'Paparan cerah & bersih untuk siang hari (Lalai / Default)',
+    themeDark: 'Mod Gelap (Dark)',
+    themeDarkDesc: 'Paparan kontras tinggi slate gelap',
+    languageLabel: 'Bahasa Antaramuka',
+    langEn: 'English',
+    langEnDesc: 'Bahasa antaramuka lalai (Default)',
+    langMs: 'Bahasa Melayu',
+    langMsDesc: 'Bahasa Kebangsaan Malaysia',
+    aboutVersion: 'Versi',
+    aboutWorkspace: 'Ruang Kerja Aktif',
+    aboutDeploy: 'Penyebaran',
+    close: 'Tutup',
+  }
+};
