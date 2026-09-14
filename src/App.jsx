@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+﻿import React, { useState, useEffect } from 'react';
 import { 
   Users, 
   CalendarClock, 
@@ -254,7 +254,7 @@ export default function App() {
               <div className="px-1 py-1">
                 <div className="flex items-center gap-2 px-2.5 py-1.5 rounded-lg bg-slate-100/80 dark:bg-slate-900/80 border border-slate-200 dark:border-slate-800 text-[11px] text-slate-600 dark:text-slate-400 font-mono">
                   <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse shrink-0"></span>
-                  <span className="truncate">Downtown Flagship • HQ</span>
+                  <span className="truncate">Downtown Flagship â€¢ HQ</span>
                 </div>
               </div>
             </div>
@@ -269,6 +269,7 @@ export default function App() {
                     key={tab.id}
                     type="button"
                     onClick={() => handleTabChange(tab.id)}
+                    aria-current={isActive ? 'page' : undefined}
                     className={`w-full flex items-center justify-between px-3 py-2 rounded-xl text-xs font-medium transition-all cursor-pointer ${
                       isActive
                         ? 'bg-cyan-50 dark:bg-cyan-950/40 text-cyan-700 dark:text-cyan-300 font-semibold border border-cyan-200 dark:border-cyan-800/60 shadow-sm'
@@ -276,7 +277,7 @@ export default function App() {
                     }`}
                   >
                     <div className="flex items-center gap-2.5 min-w-0">
-                      <Icon className={`w-4 h-4 shrink-0 ${isActive ? 'text-cyan-600 dark:text-cyan-400' : 'text-slate-400 dark:text-slate-500'}`} />
+                      <Icon className={`w-4 h-4 shrink-0 ${isActive ? 'text-cyan-600 dark:text-cyan-400' : 'text-slate-400 dark:text-slate-400'}`} />
                       <span className="truncate">{tab.label}</span>
                     </div>
                     <div className="flex items-center gap-1.5 shrink-0">
@@ -295,7 +296,7 @@ export default function App() {
             </nav>
           </div>
 
-          {/* Bottom footer: Settings trigger (⚙️) + Suite Waffle Menu */}
+          {/* Bottom footer: Settings trigger (âš™ï¸) + Suite Waffle Menu */}
           <div className="pt-3 border-t border-slate-200 dark:border-slate-800 flex items-center justify-between px-1">
             <button
               type="button"
@@ -325,7 +326,7 @@ export default function App() {
           <button
             type="button"
             onClick={() => setShowSettingsModal(true)}
-            className="p-2 rounded-xl text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-100 hover:bg-slate-100 dark:hover:bg-slate-900 min-w-[36px] min-h-[36px] flex items-center justify-center transition-colors cursor-pointer"
+            className="p-2 rounded-xl text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-100 hover:bg-slate-100 dark:hover:bg-slate-900 min-w-[44px] min-h-[44px] flex items-center justify-center transition-colors cursor-pointer"
             aria-label={t('settings')}
             title={t('settings')}
           >
@@ -335,8 +336,8 @@ export default function App() {
       </header>
 
       {/* MAIN CONTAINER */}
-      <div className="md:pl-64 flex-1 flex flex-col min-w-0 pb-24 md:pb-8 px-4 sm:px-6 lg:px-8 py-6">
-        <main className="flex-1 max-w-7xl w-full mx-auto space-y-6">
+      <div className="md:pl-64 flex-1 flex flex-col min-w-0 pb-24 md:pb-8 py-6">
+        <main className="flex-1 max-w-7xl w-full mx-auto space-y-6 px-4 sm:px-6 lg:px-8">
           
           {/* KPI Dashboard Row */}
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
@@ -465,6 +466,7 @@ export default function App() {
         <button
           type="button"
           onClick={() => handleTabChange('roster')}
+          aria-current={activeTab === 'roster' ? 'page' : undefined}
           className={`flex flex-col items-center justify-center flex-1 py-1 text-[10px] font-medium transition-colors cursor-pointer ${
             activeTab === 'roster' ? 'text-cyan-600 dark:text-cyan-400 font-bold' : 'text-slate-500 dark:text-slate-400'
           }`}
@@ -476,6 +478,7 @@ export default function App() {
         <button
           type="button"
           onClick={() => handleTabChange('attendance')}
+          aria-current={activeTab === 'attendance' ? 'page' : undefined}
           className={`flex flex-col items-center justify-center flex-1 py-1 text-[10px] font-medium transition-colors relative cursor-pointer ${
             activeTab === 'attendance' ? 'text-cyan-600 dark:text-cyan-400 font-bold' : 'text-slate-500 dark:text-slate-400'
           }`}
@@ -492,6 +495,7 @@ export default function App() {
         <button
           type="button"
           onClick={() => handleTabChange('leave-claims')}
+          aria-current={activeTab === 'leave-claims' ? 'page' : undefined}
           className={`flex flex-col items-center justify-center flex-1 py-1 text-[10px] font-medium transition-colors relative cursor-pointer ${
             activeTab === 'leave-claims' ? 'text-cyan-600 dark:text-cyan-400 font-bold' : 'text-slate-500 dark:text-slate-400'
           }`}
@@ -508,6 +512,7 @@ export default function App() {
         <button
           type="button"
           onClick={() => handleTabChange('payroll')}
+          aria-current={activeTab === 'payroll' ? 'page' : undefined}
           className={`flex flex-col items-center justify-center flex-1 py-1 text-[10px] font-medium transition-colors cursor-pointer ${
             activeTab === 'payroll' ? 'text-cyan-600 dark:text-cyan-400 font-bold' : 'text-slate-500 dark:text-slate-400'
           }`}
@@ -532,7 +537,16 @@ export default function App() {
 
       {/* MORE DRAWER (Bottom Sheet for Mobile Viewports) */}
       {showMoreDrawer && (
-        <div className="md:hidden fixed inset-0 z-50 flex flex-col justify-end">
+        <div 
+          className="md:hidden fixed inset-0 z-50 flex flex-col justify-end"
+          role="dialog"
+          aria-modal="true"
+          aria-label={t('moreModules')}
+          onKeyDown={(e) => {
+            if (e.key === 'Escape') setShowMoreDrawer(false);
+          }}
+          tabIndex={-1}
+        >
           {/* Backdrop */}
           <div 
             className="fixed inset-0 bg-slate-950/60 backdrop-blur-sm transition-opacity animate-in fade-in"
@@ -551,7 +565,8 @@ export default function App() {
               <button
                 type="button"
                 onClick={() => setShowMoreDrawer(false)}
-                className="p-1 rounded-lg text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
+                className="p-1 rounded-lg text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors min-w-[44px] min-h-[44px] flex items-center justify-center cursor-pointer"
+                aria-label="Close menu"
               >
                 <X className="w-4 h-4" />
               </button>
@@ -574,6 +589,7 @@ export default function App() {
                       handleTabChange(item.id);
                       setShowMoreDrawer(false);
                     }}
+                    aria-current={isActive ? 'page' : undefined}
                     className={`w-full flex items-center justify-between p-3 rounded-xl text-left transition-all cursor-pointer ${
                       isActive
                         ? 'bg-cyan-50 dark:bg-cyan-950/40 border border-cyan-200 dark:border-cyan-800/60 text-cyan-700 dark:text-cyan-300 shadow-sm'
@@ -590,7 +606,7 @@ export default function App() {
                       </div>
                       <div className="min-w-0">
                         <p className="text-xs font-semibold truncate">{item.label}</p>
-                        <p className="text-[11px] text-slate-400 dark:text-slate-500 truncate">{item.desc}</p>
+                        <p className="text-[11px] text-slate-400 dark:text-slate-400 truncate">{item.desc}</p>
                       </div>
                     </div>
                     {isActive && (
@@ -618,7 +634,7 @@ export default function App() {
                 </div>
                 <div className="min-w-0">
                   <p className="text-xs font-semibold truncate">{t('settings')}</p>
-                  <p className="text-[11px] text-slate-400 dark:text-slate-500 truncate">{t('settingsSub')}</p>
+                  <p className="text-[11px] text-slate-400 dark:text-slate-400 truncate">{t('settingsSub')}</p>
                 </div>
               </div>
               <ChevronRight className="w-4 h-4 text-slate-400 shrink-0" />
@@ -660,7 +676,11 @@ export default function App() {
 
       {/* Floating Toast */}
       {toastMessage && (
-        <div className="fixed bottom-20 md:bottom-6 right-6 z-50 px-4 py-3 rounded-xl bg-slate-900 border border-cyan-500/40 text-cyan-300 shadow-2xl text-xs flex items-center gap-2.5 animate-in fade-in slide-in-from-bottom-2">
+        <div 
+          role="status"
+          aria-live="polite"
+          className="fixed bottom-20 md:bottom-6 right-6 z-50 px-4 py-3 rounded-xl bg-slate-900 border border-cyan-500/40 text-cyan-300 shadow-2xl text-xs flex items-center gap-2.5 animate-in fade-in slide-in-from-bottom-2"
+        >
           <CheckCircle2 className="w-4 h-4 text-cyan-400 shrink-0" />
           <span className="font-medium">{toastMessage}</span>
         </div>
@@ -668,3 +688,4 @@ export default function App() {
     </div>
   );
 }
+

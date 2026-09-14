@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Calendar, Clock, DollarSign, Users, AlertCircle, Plus, Sparkles, CheckCircle2 } from 'lucide-react';
+import { Calendar, Clock, Users, AlertCircle, Plus, Sparkles, CheckCircle2 } from 'lucide-react';
 
 export default function RosterView({ 
   rosterDays, 
@@ -19,7 +19,7 @@ export default function RosterView({
   const currentShifts = dayShifts[selectedDay] || [];
   const totalDayHours = currentShifts.reduce((acc, s) => acc + s.hours, 0);
   const totalDayCost = currentShifts.reduce((acc, s) => {
-    const num = parseFloat(s.wage.replace('$', '')) || 0;
+    const num = parseFloat(String(s.wage).replace(/[^0-9.]/g, '')) || 0;
     return acc + num;
   }, 0);
 
@@ -31,6 +31,7 @@ export default function RosterView({
           <button
             key={d.day}
             onClick={() => setSelectedDay(d.day)}
+            aria-pressed={selectedDay === d.day}
             className={`p-3.5 rounded-xl border text-left transition-all cursor-pointer ${
               selectedDay === d.day 
                 ? 'bg-cyan-50 dark:bg-cyan-950/40 border-cyan-500 text-cyan-900 dark:text-white shadow-sm ring-1 ring-cyan-500/30' 
@@ -43,7 +44,7 @@ export default function RosterView({
             </div>
             <div className="mt-2.5 space-y-0.5 text-[11px]">
               <p className="text-cyan-600 dark:text-cyan-400 font-mono font-medium">{d.hours} hrs</p>
-              <p className="text-slate-500">${d.cost}</p>
+              <p className="text-slate-500">RM {d.cost}</p>
             </div>
           </button>
         ))}
@@ -75,7 +76,7 @@ export default function RosterView({
               </span>
             </div>
             <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5">
-              Target shift hours: <span className="text-slate-900 dark:text-white font-mono">{totalDayHours}h</span> • Est. Labor Spend: <span className="text-emerald-600 dark:text-emerald-400 font-mono">${totalDayCost.toFixed(0)}</span>
+              Target shift hours: <span className="text-slate-900 dark:text-white font-mono">{totalDayHours}h</span> • Est. Labor Spend: <span className="text-emerald-600 dark:text-emerald-400 font-mono">RM {totalDayCost.toFixed(0)}</span>
             </p>
           </div>
 
@@ -129,7 +130,7 @@ export default function RosterView({
                     <span>{s.time}</span>
                     <span className="text-slate-500 dark:text-slate-400 text-[11px]">({s.hours} hrs)</span>
                   </div>
-                  <p className="text-slate-500 text-[11px]">Est. Cost: <span className="text-slate-700 dark:text-slate-300">{s.wage}</span></p>
+                  <p className="text-slate-500 text-[11px]">Est. Cost: <span className="text-slate-700 dark:text-slate-300">{String(s.wage).startsWith('RM') ? s.wage : `RM ${parseFloat(String(s.wage).replace(/[^0-9.]/g, '')) || 0}`}</span></p>
                 </div>
 
                 <div className="flex items-center gap-1.5">

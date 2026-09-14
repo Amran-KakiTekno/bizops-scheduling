@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+﻿import React, { useState, useEffect } from 'react';
 import { 
   Clock, 
   MapPin, 
@@ -62,25 +62,25 @@ export default function AttendanceView({
               <span className="w-2 h-2 rounded-full bg-cyan-500 dark:bg-cyan-400 motion-safe:animate-pulse"></span>
               {activeOnShift} Clocked In
             </div>
-            <p className="text-[10px] font-mono text-slate-400 dark:text-zinc-500">Live GPS ping verified</p>
+            <p className="text-[10px] font-mono text-slate-400 dark:text-slate-400">Live GPS ping verified</p>
           </div>
 
           <div className="p-4 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm hover:border-slate-300 dark:hover:border-slate-700 transition-all space-y-1">
             <span className="text-[11px] font-mono uppercase tracking-wider text-slate-500 dark:text-zinc-400">Geofence Compliance</span>
             <div className="text-xl font-bold font-mono tabular-nums text-emerald-600 dark:text-emerald-400">100% Passed</div>
-            <p className="text-[10px] font-mono text-slate-400 dark:text-zinc-500">Zero offsite punches detected</p>
+            <p className="text-[10px] font-mono text-slate-400 dark:text-slate-400">Zero offsite punches detected</p>
           </div>
 
           <div className="p-4 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm hover:border-slate-300 dark:hover:border-slate-700 transition-all space-y-1">
             <span className="text-[11px] font-mono uppercase tracking-wider text-slate-500 dark:text-zinc-400">Pending Review</span>
             <div className="text-xl font-bold font-mono tabular-nums text-amber-600 dark:text-amber-400">{pendingCount} Records</div>
-            <p className="text-[10px] font-mono text-slate-400 dark:text-zinc-500">Scheduled vs actual comparison</p>
+            <p className="text-[10px] font-mono text-slate-400 dark:text-slate-400">Scheduled vs actual comparison</p>
           </div>
 
           <div className="p-4 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm hover:border-slate-300 dark:hover:border-slate-700 transition-all space-y-1">
             <span className="text-[11px] font-mono uppercase tracking-wider text-slate-500 dark:text-zinc-400">Punctuality Score</span>
             <div className="text-xl font-bold font-mono tabular-nums text-slate-900 dark:text-zinc-100">96.2%</div>
-            <p className="text-[10px] font-mono text-slate-400 dark:text-zinc-500">1 shift arrival &gt; 10m grace</p>
+            <p className="text-[10px] font-mono text-slate-400 dark:text-slate-400">1 shift arrival &gt; 10m grace</p>
           </div>
         </div>
       </div>
@@ -101,19 +101,22 @@ export default function AttendanceView({
             <div className="flex bg-slate-100 dark:bg-black p-1 rounded-xl border border-slate-200 dark:border-white/[0.08] text-[11px] shadow-sm">
               <button 
                 onClick={() => setFilter('all')}
-                className={`px-2.5 py-1 rounded-lg transition-colors cursor-pointer ${filter === 'all' ? 'bg-white dark:bg-zinc-900 text-slate-900 dark:text-white font-medium border border-slate-200 dark:border-white/[0.08] shadow-sm' : 'text-slate-500 dark:text-zinc-400 hover:text-slate-900 dark:hover:text-white'}`}
+                aria-pressed={filter === 'all'}
+                className={`px-2.5 py-1 rounded-lg transition-colors cursor-pointer min-h-[44px] flex items-center ${filter === 'all' ? 'bg-white dark:bg-zinc-900 text-slate-900 dark:text-white font-medium border border-slate-200 dark:border-white/[0.08] shadow-sm' : 'text-slate-500 dark:text-zinc-400 hover:text-slate-900 dark:hover:text-white'}`}
               >
                 All ({attendanceList.length})
               </button>
               <button 
                 onClick={() => setFilter('pending')}
-                className={`px-2.5 py-1 rounded-lg transition-colors cursor-pointer ${filter === 'pending' ? 'bg-white dark:bg-zinc-900 text-amber-700 dark:text-amber-300 font-medium border border-slate-200 dark:border-white/[0.08] shadow-sm' : 'text-slate-500 dark:text-zinc-400 hover:text-slate-900 dark:hover:text-white'}`}
+                aria-pressed={filter === 'pending'}
+                className={`px-2.5 py-1 rounded-lg transition-colors cursor-pointer min-h-[44px] flex items-center ${filter === 'pending' ? 'bg-white dark:bg-zinc-900 text-amber-700 dark:text-amber-300 font-medium border border-slate-200 dark:border-white/[0.08] shadow-sm' : 'text-slate-500 dark:text-zinc-400 hover:text-slate-900 dark:hover:text-white'}`}
               >
                 Pending ({pendingCount})
               </button>
               <button 
                 onClick={() => setFilter('reconciled')}
-                className={`px-2.5 py-1 rounded-lg transition-colors cursor-pointer ${filter === 'reconciled' ? 'bg-white dark:bg-zinc-900 text-emerald-700 dark:text-emerald-300 font-medium border border-slate-200 dark:border-white/[0.08] shadow-sm' : 'text-slate-500 dark:text-zinc-400 hover:text-slate-900 dark:hover:text-white'}`}
+                aria-pressed={filter === 'reconciled'}
+                className={`px-2.5 py-1 rounded-lg transition-colors cursor-pointer min-h-[44px] flex items-center ${filter === 'reconciled' ? 'bg-white dark:bg-zinc-900 text-emerald-700 dark:text-emerald-300 font-medium border border-slate-200 dark:border-white/[0.08] shadow-sm' : 'text-slate-500 dark:text-zinc-400 hover:text-slate-900 dark:hover:text-white'}`}
               >
                 Approved
               </button>
@@ -122,7 +125,7 @@ export default function AttendanceView({
             {pendingCount > 0 && (
               <button
                 onClick={() => setShowConfirmReconcile(true)}
-                className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-medium transition-colors shadow-md shadow-emerald-600/20 cursor-pointer"
+                className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-medium transition-colors shadow-md shadow-emerald-600/20 cursor-pointer min-h-[44px]"
               >
                 <CheckCheck className="w-3.5 h-3.5" />
                 <span>Approve All</span>
@@ -136,7 +139,7 @@ export default function AttendanceView({
           {filteredList.map((item) => (
             <div 
               key={item.id} 
-              className="p-4 flex flex-col md:flex-row md:items-center justify-between gap-4 hover:bg-slate-800/30 transition-colors"
+              className="p-4 flex flex-col md:flex-row md:items-center justify-between gap-4 hover:bg-slate-100 dark:hover:bg-slate-800/30 transition-colors"
             >
               {/* Employee & Shift */}
               <div className="flex items-center gap-3">
@@ -309,3 +312,4 @@ export default function AttendanceView({
     </div>
   );
 }
+

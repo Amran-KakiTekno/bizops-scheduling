@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+﻿import React, { useState } from 'react';
 import AccessibleModal from './AccessibleModal';
 import { 
   Calendar, 
@@ -38,7 +38,8 @@ export default function LeaveClaimsView({
         <div className="flex items-center gap-2">
           <button
             onClick={() => setActiveSection('leave')}
-            className={`px-4 py-2 rounded-lg text-xs font-medium transition-colors flex items-center gap-2 cursor-pointer ${
+            aria-pressed={activeSection === 'leave'}
+            className={`px-4 py-2 rounded-lg text-xs font-medium transition-colors flex items-center gap-2 cursor-pointer min-h-[44px] ${
               activeSection === 'leave'
                 ? 'bg-cyan-600 text-white shadow-sm'
                 : 'bg-white dark:bg-slate-900 text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white border border-slate-200 dark:border-slate-800 shadow-sm'
@@ -55,7 +56,8 @@ export default function LeaveClaimsView({
 
           <button
             onClick={() => setActiveSection('claims')}
-            className={`px-4 py-2 rounded-lg text-xs font-medium transition-colors flex items-center gap-2 cursor-pointer ${
+            aria-pressed={activeSection === 'claims'}
+            className={`px-4 py-2 rounded-lg text-xs font-medium transition-colors flex items-center gap-2 cursor-pointer min-h-[44px] ${
               activeSection === 'claims'
                 ? 'bg-cyan-600 text-white shadow-sm'
                 : 'bg-white dark:bg-slate-900 text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white border border-slate-200 dark:border-slate-800 shadow-sm'
@@ -166,7 +168,7 @@ export default function LeaveClaimsView({
                         <span className="underline cursor-pointer">{req.docAttached}</span>
                       </div>
                     ) : (
-                      <p className="text-slate-400 dark:text-slate-500 text-[10px]">No medical slip required</p>
+                      <p className="text-slate-400 dark:text-slate-400 text-[10px]">No medical slip required</p>
                     )}
                   </div>
                 </div>
@@ -190,14 +192,14 @@ export default function LeaveClaimsView({
                         setRejectingLeave(req);
                         setRejectionReason('');
                       }}
-                      className="px-3 py-1.5 rounded-lg bg-slate-100 dark:bg-slate-800 hover:bg-rose-50 dark:hover:bg-rose-950/50 text-slate-700 dark:text-slate-300 hover:text-rose-700 dark:hover:text-rose-300 text-xs font-medium transition-colors border border-slate-200 dark:border-slate-700 hover:border-rose-300 dark:hover:border-rose-500/30 flex items-center gap-1.5 cursor-pointer"
+                      className="px-3 py-1.5 rounded-lg bg-slate-100 dark:bg-slate-800 hover:bg-rose-50 dark:hover:bg-rose-950/50 text-slate-700 dark:text-slate-300 hover:text-rose-700 dark:hover:text-rose-300 text-xs font-medium transition-colors border border-slate-200 dark:border-slate-700 hover:border-rose-300 dark:hover:border-rose-500/30 flex items-center gap-1.5 cursor-pointer min-h-[44px]"
                     >
                       <XCircle className="w-3.5 h-3.5 text-rose-500 dark:text-rose-400" />
                       <span>Decline...</span>
                     </button>
                     <button
                       onClick={() => onApproveLeave(req.id)}
-                      className="px-3.5 py-1.5 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-medium transition-colors shadow-lg shadow-emerald-600/20 flex items-center gap-1.5 cursor-pointer"
+                      className="px-3.5 py-1.5 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-medium transition-colors shadow-lg shadow-emerald-600/20 flex items-center gap-1.5 cursor-pointer min-h-[44px]"
                     >
                       <CheckCircle2 className="w-3.5 h-3.5" />
                       <span>Approve & Update Roster</span>
@@ -247,7 +249,7 @@ export default function LeaveClaimsView({
                         </span>
                       </div>
                       <p className="text-[11px] text-slate-500 dark:text-slate-400 mt-0.5">
-                        Claimed by <strong className="text-slate-800 dark:text-slate-200">{claim.name}</strong> • {claim.date}
+                        Claimed by <strong className="text-slate-800 dark:text-slate-200">{claim.name}</strong> â€¢ {claim.date}
                       </p>
                       <p className="text-[11px] text-slate-500 italic mt-0.5">"{claim.description}"</p>
                     </div>
@@ -263,7 +265,7 @@ export default function LeaveClaimsView({
                       {claim.status === 'Pending' ? (
                         <button
                           onClick={() => onApproveClaim(claim.id)}
-                          className="px-3 py-1.5 rounded-lg bg-cyan-600 hover:bg-cyan-500 text-white text-xs font-medium transition-colors shadow-lg shadow-cyan-600/20 flex items-center gap-1 cursor-pointer"
+                          className="px-3 py-1.5 rounded-lg bg-cyan-600 hover:bg-cyan-500 text-white text-xs font-medium transition-colors shadow-lg shadow-cyan-600/20 flex items-center gap-1 cursor-pointer min-h-[44px]"
                         >
                           <CheckCircle2 className="w-3.5 h-3.5" />
                           <span>Approve Claim</span>
@@ -295,15 +297,15 @@ export default function LeaveClaimsView({
           maxWidth="max-w-md"
         >
           {/* Modal Header */}
-          <div className="p-5 border-b border-slate-800 bg-slate-950/60 flex items-start justify-between">
+          <div className="p-5 border-b border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-950/60 flex items-start justify-between">
             <div className="flex items-center gap-3">
-              <div className="w-9 h-9 rounded-xl bg-rose-500/10 border border-rose-500/20 text-rose-400 flex items-center justify-center">
+              <div className="w-9 h-9 rounded-xl bg-rose-500/10 border border-rose-500/20 text-rose-600 dark:text-rose-400 flex items-center justify-center">
                 <XCircle className="w-5 h-5" />
               </div>
               <div>
-                <h3 id="reject-leave-modal-title" className="font-bold text-sm text-white">Decline Leave Request</h3>
-                <p className="text-xs text-slate-400 mt-0.5">
-                  {rejectingLeave.name} • <span className="text-cyan-400">{rejectingLeave.type}</span>
+                <h3 id="reject-leave-modal-title" className="font-bold text-sm text-slate-900 dark:text-white">Decline Leave Request</h3>
+                <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5">
+                  {rejectingLeave.name} â€¢ <span className="text-cyan-600 dark:text-cyan-400">{rejectingLeave.type}</span>
                 </p>
               </div>
             </div>
@@ -313,41 +315,41 @@ export default function LeaveClaimsView({
                 setRejectionReason('');
               }}
               aria-label="Close modal"
-              className="p-1.5 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg transition-colors"
+              className="p-1.5 text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg transition-colors"
             >
               <X className="w-4 h-4" />
             </button>
           </div>
 
           {/* Modal Body */}
-          <div className="p-5 space-y-4 text-xs text-slate-300">
-            <div className="p-3 rounded-xl bg-slate-950/60 border border-slate-800 space-y-1">
+          <div className="p-5 space-y-4 text-xs text-slate-600 dark:text-slate-300">
+            <div className="p-3 rounded-xl bg-slate-50 dark:bg-slate-950/60 border border-slate-200 dark:border-slate-800 space-y-1">
               <div className="flex justify-between text-[11px]">
-                <span className="text-slate-400">Requested Period:</span>
-                <span className="font-mono text-white">{rejectingLeave.dates}</span>
+                <span className="text-slate-500 dark:text-slate-400">Requested Period:</span>
+                <span className="font-mono text-slate-900 dark:text-white">{rejectingLeave.dates}</span>
               </div>
               <div className="flex justify-between text-[11px]">
-                <span className="text-slate-400">Employee Reason:</span>
-                <span className="text-slate-300 italic">"{rejectingLeave.reason}"</span>
+                <span className="text-slate-500 dark:text-slate-400">Employee Reason:</span>
+                <span className="text-slate-600 dark:text-slate-300 italic">"{rejectingLeave.reason}"</span>
               </div>
             </div>
 
             <div className="space-y-1.5">
-              <label className="block font-medium text-white text-xs">
-                Constructive Rejection Feedback <span className="text-slate-400 font-normal">(Optional)</span>
+              <label className="block font-medium text-slate-700 dark:text-white text-xs">
+                Constructive Rejection Feedback <span className="text-slate-500 dark:text-slate-400 font-normal">(Optional)</span>
               </label>
               <textarea
                 value={rejectionReason}
                 onChange={(e) => setRejectionReason(e.target.value)}
                 placeholder="Specify reason or instructions (e.g., Short-staffed during peak shift; please coordinate a shift swap with Jordan or reapply for next week)."
                 rows={3}
-                className="w-full rounded-xl bg-slate-950 border border-slate-800 p-3 text-white text-xs placeholder:text-slate-500 focus:border-rose-500 focus:ring-1 focus:ring-rose-500/20 focus:outline-none transition-colors resize-none"
+                className="w-full rounded-xl bg-white dark:bg-slate-950 border border-slate-300 dark:border-slate-700 p-3 text-slate-900 dark:text-white text-xs placeholder:text-slate-400 dark:placeholder:text-slate-500 focus:border-rose-500 focus:ring-1 focus:ring-rose-500/20 focus:outline-none transition-colors resize-none"
               />
             </div>
 
             {/* Quick Reason Chips */}
             <div className="space-y-1.5">
-              <span className="text-[10px] text-slate-400 uppercase tracking-wider font-semibold">Quick Reason Suggestions:</span>
+              <span className="text-[10px] text-slate-500 dark:text-slate-400 uppercase tracking-wider font-semibold">Quick Reason Suggestions:</span>
               <div className="flex flex-wrap gap-1.5">
                 {[
                   'Critical shift understaffed',
@@ -360,7 +362,7 @@ export default function LeaveClaimsView({
                     key={chip}
                     type="button"
                     onClick={() => setRejectionReason(chip)}
-                    className="px-2.5 py-1 rounded-lg bg-slate-950 hover:bg-slate-800 text-slate-300 hover:text-white border border-slate-800 text-[11px] transition-colors"
+                    className="px-2.5 py-1 rounded-lg bg-white dark:bg-slate-950 hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white border border-slate-300 dark:border-slate-700 text-[11px] transition-colors min-h-[44px] inline-flex items-center"
                   >
                     {chip}
                   </button>
@@ -368,19 +370,19 @@ export default function LeaveClaimsView({
               </div>
             </div>
 
-            <p className="text-[11px] text-slate-500 leading-relaxed">
+            <p className="text-[11px] text-slate-500 dark:text-slate-400 leading-relaxed">
               This note will be communicated back to {rejectingLeave.name} in their self-service notification feed.
             </p>
           </div>
 
           {/* Modal Footer */}
-          <div className="p-4 border-t border-slate-800 bg-slate-950/60 flex items-center justify-end gap-2">
+          <div className="p-4 border-t border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-950/60 flex items-center justify-end gap-2">
             <button
               onClick={() => {
                 setRejectingLeave(null);
                 setRejectionReason('');
               }}
-              className="px-3.5 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs font-medium transition-colors"
+              className="px-3.5 py-1.5 rounded-lg bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 text-xs font-medium transition-colors min-h-[44px]"
             >
               Cancel
             </button>
@@ -390,7 +392,7 @@ export default function LeaveClaimsView({
                 setRejectingLeave(null);
                 setRejectionReason('');
               }}
-              className="px-4 py-1.5 rounded-lg bg-rose-600 hover:bg-rose-500 text-white text-xs font-medium transition-colors shadow-lg shadow-rose-600/20 flex items-center gap-1.5"
+              className="px-4 py-1.5 rounded-lg bg-rose-600 hover:bg-rose-500 text-white text-xs font-medium transition-colors shadow-lg shadow-rose-600/20 flex items-center gap-1.5 min-h-[44px]"
             >
               <XCircle className="w-3.5 h-3.5" />
               <span>Confirm Decline</span>
@@ -401,3 +403,4 @@ export default function LeaveClaimsView({
     </div>
   );
 }
+
