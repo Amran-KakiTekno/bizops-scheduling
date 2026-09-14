@@ -16,6 +16,11 @@ import {
   FileText 
 } from 'lucide-react';
 
+const fmtRM = (val) => {
+  const num = parseFloat(String(val).replace(/[^0-9.]/g, ''));
+  return isNaN(num) ? '0.00' : num.toFixed(2);
+};
+
 export default function EmployeeDetailModal({ employee, onClose, onViewPayslip }) {
   useEffect(() => {
     const handleKeyDown = (e) => {
@@ -33,6 +38,8 @@ export default function EmployeeDetailModal({ employee, onClose, onViewPayslip }
   }, [onClose]);
 
   if (!employee) return null;
+
+  const rate = parseFloat(String(employee.rate).replace(/[^0-9.]/g, ''));
 
   return (
     <AccessibleModal
@@ -84,7 +91,7 @@ export default function EmployeeDetailModal({ employee, onClose, onViewPayslip }
             </div>
             <div className="p-3 rounded-xl bg-slate-50 dark:bg-slate-950/60 border border-slate-200 dark:border-slate-800 space-y-1">
               <span className="text-[10px] text-slate-500 dark:text-slate-400 uppercase tracking-wider">Base Pay Rate</span>
-              <p className="font-semibold font-mono text-emerald-600 dark:text-emerald-400">${employee.rate}/hour</p>
+              <p className="font-semibold font-mono text-emerald-600 dark:text-emerald-400">RM {fmtRM(rate)}/hour</p>
             </div>
             <div className="p-3 rounded-xl bg-slate-50 dark:bg-slate-950/60 border border-slate-200 dark:border-slate-800 space-y-1">
               <span className="text-[10px] text-slate-500 dark:text-slate-400 uppercase tracking-wider">Tenure</span>
