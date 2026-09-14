@@ -269,6 +269,7 @@ export default function App() {
                     key={tab.id}
                     type="button"
                     onClick={() => handleTabChange(tab.id)}
+                    aria-current={isActive ? 'page' : undefined}
                     className={`w-full flex items-center justify-between px-3 py-2 rounded-xl text-xs font-medium transition-all cursor-pointer ${
                       isActive
                         ? 'bg-cyan-50 dark:bg-cyan-950/40 text-cyan-700 dark:text-cyan-300 font-semibold border border-cyan-200 dark:border-cyan-800/60 shadow-sm'
@@ -465,6 +466,7 @@ export default function App() {
         <button
           type="button"
           onClick={() => handleTabChange('roster')}
+          aria-current={activeTab === 'roster' ? 'page' : undefined}
           className={`flex flex-col items-center justify-center flex-1 py-1 text-[10px] font-medium transition-colors cursor-pointer ${
             activeTab === 'roster' ? 'text-cyan-600 dark:text-cyan-400 font-bold' : 'text-slate-500 dark:text-slate-400'
           }`}
@@ -476,6 +478,7 @@ export default function App() {
         <button
           type="button"
           onClick={() => handleTabChange('attendance')}
+          aria-current={activeTab === 'attendance' ? 'page' : undefined}
           className={`flex flex-col items-center justify-center flex-1 py-1 text-[10px] font-medium transition-colors relative cursor-pointer ${
             activeTab === 'attendance' ? 'text-cyan-600 dark:text-cyan-400 font-bold' : 'text-slate-500 dark:text-slate-400'
           }`}
@@ -492,6 +495,7 @@ export default function App() {
         <button
           type="button"
           onClick={() => handleTabChange('leave-claims')}
+          aria-current={activeTab === 'leave-claims' ? 'page' : undefined}
           className={`flex flex-col items-center justify-center flex-1 py-1 text-[10px] font-medium transition-colors relative cursor-pointer ${
             activeTab === 'leave-claims' ? 'text-cyan-600 dark:text-cyan-400 font-bold' : 'text-slate-500 dark:text-slate-400'
           }`}
@@ -508,6 +512,7 @@ export default function App() {
         <button
           type="button"
           onClick={() => handleTabChange('payroll')}
+          aria-current={activeTab === 'payroll' ? 'page' : undefined}
           className={`flex flex-col items-center justify-center flex-1 py-1 text-[10px] font-medium transition-colors cursor-pointer ${
             activeTab === 'payroll' ? 'text-cyan-600 dark:text-cyan-400 font-bold' : 'text-slate-500 dark:text-slate-400'
           }`}
@@ -584,6 +589,7 @@ export default function App() {
                       handleTabChange(item.id);
                       setShowMoreDrawer(false);
                     }}
+                    aria-current={isActive ? 'page' : undefined}
                     className={`w-full flex items-center justify-between p-3 rounded-xl text-left transition-all cursor-pointer ${
                       isActive
                         ? 'bg-cyan-50 dark:bg-cyan-950/40 border border-cyan-200 dark:border-cyan-800/60 text-cyan-700 dark:text-cyan-300 shadow-sm'
@@ -670,7 +676,11 @@ export default function App() {
 
       {/* Floating Toast */}
       {toastMessage && (
-        <div className="fixed bottom-20 md:bottom-6 right-6 z-50 px-4 py-3 rounded-xl bg-slate-900 border border-cyan-500/40 text-cyan-300 shadow-2xl text-xs flex items-center gap-2.5 animate-in fade-in slide-in-from-bottom-2">
+        <div 
+          role="status"
+          aria-live="polite"
+          className="fixed bottom-20 md:bottom-6 right-6 z-50 px-4 py-3 rounded-xl bg-slate-900 border border-cyan-500/40 text-cyan-300 shadow-2xl text-xs flex items-center gap-2.5 animate-in fade-in slide-in-from-bottom-2"
+        >
           <CheckCircle2 className="w-4 h-4 text-cyan-400 shrink-0" />
           <span className="font-medium">{toastMessage}</span>
         </div>

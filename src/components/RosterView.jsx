@@ -31,6 +31,7 @@ export default function RosterView({
           <button
             key={d.day}
             onClick={() => setSelectedDay(d.day)}
+            aria-pressed={selectedDay === d.day}
             className={`p-3.5 rounded-xl border text-left transition-all cursor-pointer ${
               selectedDay === d.day 
                 ? 'bg-cyan-50 dark:bg-cyan-950/40 border-cyan-500 text-cyan-900 dark:text-white shadow-sm ring-1 ring-cyan-500/30' 

@@ -38,6 +38,7 @@ export default function LeaveClaimsView({
         <div className="flex items-center gap-2">
           <button
             onClick={() => setActiveSection('leave')}
+            aria-pressed={activeSection === 'leave'}
             className={`px-4 py-2 rounded-lg text-xs font-medium transition-colors flex items-center gap-2 cursor-pointer min-h-[44px] ${
               activeSection === 'leave'
                 ? 'bg-cyan-600 text-white shadow-sm'
@@ -55,6 +56,7 @@ export default function LeaveClaimsView({
 
           <button
             onClick={() => setActiveSection('claims')}
+            aria-pressed={activeSection === 'claims'}
             className={`px-4 py-2 rounded-lg text-xs font-medium transition-colors flex items-center gap-2 cursor-pointer min-h-[44px] ${
               activeSection === 'claims'
                 ? 'bg-cyan-600 text-white shadow-sm'

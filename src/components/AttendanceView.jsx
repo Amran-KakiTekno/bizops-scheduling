@@ -101,18 +101,21 @@ export default function AttendanceView({
             <div className="flex bg-slate-100 dark:bg-black p-1 rounded-xl border border-slate-200 dark:border-white/[0.08] text-[11px] shadow-sm">
               <button 
                 onClick={() => setFilter('all')}
+                aria-pressed={filter === 'all'}
                 className={`px-2.5 py-1 rounded-lg transition-colors cursor-pointer min-h-[44px] flex items-center ${filter === 'all' ? 'bg-white dark:bg-zinc-900 text-slate-900 dark:text-white font-medium border border-slate-200 dark:border-white/[0.08] shadow-sm' : 'text-slate-500 dark:text-zinc-400 hover:text-slate-900 dark:hover:text-white'}`}
               >
                 All ({attendanceList.length})
               </button>
               <button 
                 onClick={() => setFilter('pending')}
+                aria-pressed={filter === 'pending'}
                 className={`px-2.5 py-1 rounded-lg transition-colors cursor-pointer min-h-[44px] flex items-center ${filter === 'pending' ? 'bg-white dark:bg-zinc-900 text-amber-700 dark:text-amber-300 font-medium border border-slate-200 dark:border-white/[0.08] shadow-sm' : 'text-slate-500 dark:text-zinc-400 hover:text-slate-900 dark:hover:text-white'}`}
               >
                 Pending ({pendingCount})
               </button>
               <button 
                 onClick={() => setFilter('reconciled')}
+                aria-pressed={filter === 'reconciled'}
                 className={`px-2.5 py-1 rounded-lg transition-colors cursor-pointer min-h-[44px] flex items-center ${filter === 'reconciled' ? 'bg-white dark:bg-zinc-900 text-emerald-700 dark:text-emerald-300 font-medium border border-slate-200 dark:border-white/[0.08] shadow-sm' : 'text-slate-500 dark:text-zinc-400 hover:text-slate-900 dark:hover:text-white'}`}
               >
                 Approved
