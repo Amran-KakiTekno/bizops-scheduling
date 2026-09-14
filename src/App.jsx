@@ -325,7 +325,7 @@ export default function App() {
           <button
             type="button"
             onClick={() => setShowSettingsModal(true)}
-            className="p-2 rounded-xl text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-100 hover:bg-slate-100 dark:hover:bg-slate-900 min-w-[36px] min-h-[36px] flex items-center justify-center transition-colors cursor-pointer"
+            className="p-2 rounded-xl text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-100 hover:bg-slate-100 dark:hover:bg-slate-900 min-w-[44px] min-h-[44px] flex items-center justify-center transition-colors cursor-pointer"
             aria-label={t('settings')}
             title={t('settings')}
           >
@@ -532,7 +532,16 @@ export default function App() {
 
       {/* MORE DRAWER (Bottom Sheet for Mobile Viewports) */}
       {showMoreDrawer && (
-        <div className="md:hidden fixed inset-0 z-50 flex flex-col justify-end">
+        <div 
+          className="md:hidden fixed inset-0 z-50 flex flex-col justify-end"
+          role="dialog"
+          aria-modal="true"
+          aria-label={t('moreModules')}
+          onKeyDown={(e) => {
+            if (e.key === 'Escape') setShowMoreDrawer(false);
+          }}
+          tabIndex={-1}
+        >
           {/* Backdrop */}
           <div 
             className="fixed inset-0 bg-slate-950/60 backdrop-blur-sm transition-opacity animate-in fade-in"
@@ -551,7 +560,8 @@ export default function App() {
               <button
                 type="button"
                 onClick={() => setShowMoreDrawer(false)}
-                className="p-1 rounded-lg text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
+                className="p-1 rounded-lg text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors min-w-[44px] min-h-[44px] flex items-center justify-center cursor-pointer"
+                aria-label="Close menu"
               >
                 <X className="w-4 h-4" />
               </button>

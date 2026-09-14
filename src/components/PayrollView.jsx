@@ -106,7 +106,7 @@ export default function PayrollView({
         <div className="p-4 border-b border-slate-200 dark:border-slate-800 flex items-center justify-between bg-slate-50/70 dark:bg-slate-950/40">
           <div>
             <h4 className="text-sm font-semibold text-slate-900 dark:text-white">Employee Compensation Ledger</h4>
-            <p className="text-xs text-slate-500 dark:text-slate-400">Click any employee row to preview or print their digital payslip.</p>
+            <p className="text-xs text-slate-500 dark:text-slate-400">Use the Payslip button to preview or print a payslip.</p>
           </div>
           <span className="text-xs font-mono text-slate-500 dark:text-slate-400">{employees.length} Enrolled Staff</span>
         </div>

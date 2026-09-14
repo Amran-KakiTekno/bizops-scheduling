@@ -223,7 +223,7 @@ export default function MobileSimulator({
                   <select 
                     value={selectedLeaveType}
                     onChange={(e) => setSelectedLeaveType(e.target.value)}
-                    className="w-full bg-slate-900 border border-slate-800 rounded-lg p-1.5 text-white text-xs focus:outline-none"
+                    className="w-full bg-slate-900 border border-slate-800 rounded-lg p-1.5 text-white text-base sm:text-xs focus:outline-none"
                   >
                     <option>Medical Leave (MC)</option>
                     <option>Annual Leave</option>
@@ -238,7 +238,7 @@ export default function MobileSimulator({
                     type="text"
                     value={leaveReason}
                     onChange={(e) => setLeaveReason(e.target.value)}
-                    className="w-full bg-slate-900 border border-slate-800 rounded-lg p-1.5 text-white text-xs focus:outline-none"
+                    className="w-full bg-slate-900 border border-slate-800 rounded-lg p-1.5 text-white text-base sm:text-xs focus:outline-none"
                   />
                 </div>
 
