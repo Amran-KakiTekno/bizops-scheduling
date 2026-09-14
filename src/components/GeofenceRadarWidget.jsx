@@ -1,4 +1,4 @@
-import React from 'react';
+﻿import React from 'react';
 import { MapPin, ShieldCheck, Radio, Navigation } from 'lucide-react';
 
 export default function GeofenceRadarWidget({
@@ -6,7 +6,7 @@ export default function GeofenceRadarWidget({
   accuracy = '2.8m (High Precision)',
   radius = '50m Perimeter',
   status = 'Active Geofence Locked',
-  coords = '3.1390° N, 101.6869° E'
+  coords = '3.1390Â° N, 101.6869Â° E'
 }) {
   return (
     <div className="rounded-2xl bg-white dark:bg-zinc-950/90 border border-slate-200 dark:border-white/[0.08] p-4 shadow-sm dark:shadow-rim space-y-4">
@@ -54,18 +54,19 @@ export default function GeofenceRadarWidget({
       {/* Telemetry Metrics Strip */}
       <div className="grid grid-cols-3 gap-2 text-center text-xs">
         <div className="p-2 rounded-xl bg-slate-50 dark:bg-black/40 border border-slate-200 dark:border-white/[0.06]">
-          <span className="text-[10px] text-slate-500 dark:text-zinc-500 block font-mono">Location</span>
+          <span className="text-[10px] text-slate-500 dark:text-slate-400 block font-mono">Location</span>
           <span className="font-semibold text-slate-800 dark:text-zinc-200 text-[11px] truncate block">{storeName}</span>
         </div>
         <div className="p-2 rounded-xl bg-slate-50 dark:bg-black/40 border border-slate-200 dark:border-white/[0.06]">
-          <span className="text-[10px] text-slate-500 dark:text-zinc-500 block font-mono">Radius</span>
+          <span className="text-[10px] text-slate-500 dark:text-slate-400 block font-mono">Radius</span>
           <span className="font-semibold text-cyan-600 dark:text-cyan-400 text-[11px] font-mono block">{radius}</span>
         </div>
         <div className="p-2 rounded-xl bg-slate-50 dark:bg-black/40 border border-slate-200 dark:border-white/[0.06]">
-          <span className="text-[10px] text-slate-500 dark:text-zinc-500 block font-mono">Accuracy</span>
+          <span className="text-[10px] text-slate-500 dark:text-slate-400 block font-mono">Accuracy</span>
           <span className="font-semibold text-emerald-600 dark:text-emerald-400 text-[11px] font-mono block">{accuracy}</span>
         </div>
       </div>
     </div>
   );
 }
+

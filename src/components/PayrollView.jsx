@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+﻿import React, { useState, useEffect } from 'react';
 import { 
   DollarSign, 
   Clock, 
@@ -79,7 +79,7 @@ export default function PayrollView({
         <div className="p-4 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 space-y-1 shadow-sm">
           <span className="text-xs text-slate-500 dark:text-slate-400">Total Gross Payroll</span>
           <div className="text-xl font-bold font-mono text-slate-900 dark:text-white">RM {totalGross.toLocaleString('en-US', { minimumFractionDigits: 2 })}</div>
-          <p className="text-[11px] text-slate-400 dark:text-slate-500">Regular + Overtime + Claims</p>
+          <p className="text-[11px] text-slate-400 dark:text-slate-400">Regular + Overtime + Claims</p>
         </div>
 
         <div className="p-4 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 space-y-1 shadow-sm">
@@ -91,13 +91,13 @@ export default function PayrollView({
         <div className="p-4 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 space-y-1 shadow-sm">
           <span className="text-xs text-slate-500 dark:text-slate-400">Total Overtime Hours</span>
           <div className="text-xl font-bold font-mono text-cyan-600 dark:text-cyan-400">{totalOvertimeHours} Hours</div>
-          <p className="text-[11px] text-slate-400 dark:text-slate-500">Auto-calculated at 1.5x standard</p>
+          <p className="text-[11px] text-slate-400 dark:text-slate-400">Auto-calculated at 1.5x standard</p>
         </div>
 
         <div className="p-4 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 space-y-1 shadow-sm">
           <span className="text-xs text-slate-500 dark:text-slate-400">Statutory Compliance</span>
           <div className="text-xl font-bold font-mono text-slate-900 dark:text-white">Audited</div>
-          <p className="text-[11px] text-slate-400 dark:text-slate-500">EPF 11%, SOCSO & tax ready</p>
+          <p className="text-[11px] text-slate-400 dark:text-slate-400">EPF 11%, SOCSO & tax ready</p>
         </div>
       </div>
 
@@ -132,7 +132,7 @@ export default function PayrollView({
                 <tr key={emp.empId} className="hover:bg-slate-50 dark:hover:bg-slate-800/40 transition-colors">
                   <td className="p-3.5 font-sans">
                     <p className="font-semibold text-slate-900 dark:text-white">{emp.name}</p>
-                    <span className="text-[10px] text-slate-500 dark:text-slate-400 font-mono">{emp.empId} • {emp.role}</span>
+                    <span className="text-[10px] text-slate-500 dark:text-slate-400 font-mono">{emp.empId} â€¢ {emp.role}</span>
                   </td>
                   <td className="p-3.5 text-slate-600 dark:text-slate-300">RM {emp.baseRate.toFixed(2)}/hr</td>
                   <td className="p-3.5 text-slate-600 dark:text-slate-300">{emp.regularHours.toFixed(1)} hrs</td>
@@ -142,14 +142,14 @@ export default function PayrollView({
                         {emp.otHours.toFixed(1)} hrs (RM {emp.otPay.toFixed(2)})
                       </span>
                     ) : (
-                      <span className="text-slate-400 dark:text-slate-500">0.0 hrs</span>
+                      <span className="text-slate-400 dark:text-slate-400">0.0 hrs</span>
                     )}
                   </td>
                   <td className="p-3.5">
                     {emp.claimsReimbursement > 0 ? (
                       <span className="text-emerald-600 dark:text-emerald-400">+RM {emp.claimsReimbursement.toFixed(2)}</span>
                     ) : (
-                      <span className="text-slate-400 dark:text-slate-500">RM 0.00</span>
+                      <span className="text-slate-400 dark:text-slate-400">RM 0.00</span>
                     )}
                   </td>
                   <td className="p-3.5 font-bold text-slate-900 dark:text-white">RM {emp.grossTotal.toFixed(2)}</td>
@@ -176,7 +176,7 @@ export default function PayrollView({
               <div className="flex items-start justify-between gap-2">
                 <div className="min-w-0">
                   <h5 className="font-semibold text-slate-900 dark:text-white text-sm truncate">{emp.name}</h5>
-                  <p className="text-[11px] text-slate-500 dark:text-slate-400 font-mono">{emp.empId} • {emp.role}</p>
+                  <p className="text-[11px] text-slate-500 dark:text-slate-400 font-mono">{emp.empId} â€¢ {emp.role}</p>
                 </div>
                 <div className="text-right">
                   <span className="text-[10px] text-slate-500 dark:text-slate-400 block">Net Payout</span>
@@ -314,3 +314,4 @@ export default function PayrollView({
     </div>
   );
 }
+

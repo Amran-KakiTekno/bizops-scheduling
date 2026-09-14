@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+﻿import React, { useState, useEffect } from 'react';
 import { 
   Clock, 
   MapPin, 
@@ -62,25 +62,25 @@ export default function AttendanceView({
               <span className="w-2 h-2 rounded-full bg-cyan-500 dark:bg-cyan-400 motion-safe:animate-pulse"></span>
               {activeOnShift} Clocked In
             </div>
-            <p className="text-[10px] font-mono text-slate-400 dark:text-zinc-500">Live GPS ping verified</p>
+            <p className="text-[10px] font-mono text-slate-400 dark:text-slate-400">Live GPS ping verified</p>
           </div>
 
           <div className="p-4 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm hover:border-slate-300 dark:hover:border-slate-700 transition-all space-y-1">
             <span className="text-[11px] font-mono uppercase tracking-wider text-slate-500 dark:text-zinc-400">Geofence Compliance</span>
             <div className="text-xl font-bold font-mono tabular-nums text-emerald-600 dark:text-emerald-400">100% Passed</div>
-            <p className="text-[10px] font-mono text-slate-400 dark:text-zinc-500">Zero offsite punches detected</p>
+            <p className="text-[10px] font-mono text-slate-400 dark:text-slate-400">Zero offsite punches detected</p>
           </div>
 
           <div className="p-4 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm hover:border-slate-300 dark:hover:border-slate-700 transition-all space-y-1">
             <span className="text-[11px] font-mono uppercase tracking-wider text-slate-500 dark:text-zinc-400">Pending Review</span>
             <div className="text-xl font-bold font-mono tabular-nums text-amber-600 dark:text-amber-400">{pendingCount} Records</div>
-            <p className="text-[10px] font-mono text-slate-400 dark:text-zinc-500">Scheduled vs actual comparison</p>
+            <p className="text-[10px] font-mono text-slate-400 dark:text-slate-400">Scheduled vs actual comparison</p>
           </div>
 
           <div className="p-4 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm hover:border-slate-300 dark:hover:border-slate-700 transition-all space-y-1">
             <span className="text-[11px] font-mono uppercase tracking-wider text-slate-500 dark:text-zinc-400">Punctuality Score</span>
             <div className="text-xl font-bold font-mono tabular-nums text-slate-900 dark:text-zinc-100">96.2%</div>
-            <p className="text-[10px] font-mono text-slate-400 dark:text-zinc-500">1 shift arrival &gt; 10m grace</p>
+            <p className="text-[10px] font-mono text-slate-400 dark:text-slate-400">1 shift arrival &gt; 10m grace</p>
           </div>
         </div>
       </div>
@@ -312,3 +312,4 @@ export default function AttendanceView({
     </div>
   );
 }
+

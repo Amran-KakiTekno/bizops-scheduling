@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+﻿import React, { useEffect } from 'react';
 import AccessibleModal from './AccessibleModal';
 import { X, Printer, Building2, ShieldCheck, DollarSign } from 'lucide-react';
 
@@ -82,12 +82,12 @@ export default function PayslipModal({ employee, payrollData, onClose }) {
               <span className="text-base font-bold text-slate-900 dark:text-white tracking-tight payslip-heading">EZIBIZ VENTURES SDN BHD</span>
             </div>
             <p className="text-slate-500 dark:text-slate-400 text-[11px] mt-0.5 payslip-subtext">Business Registration: 202301049982 (1509901-X)</p>
-            <p className="text-slate-400 dark:text-slate-500 text-[11px] payslip-subtext">Downtown Hub, Level 4, Retail Concourse</p>
+            <p className="text-slate-400 dark:text-slate-400 text-[11px] payslip-subtext">Downtown Hub, Level 4, Retail Concourse</p>
           </div>
           <div className="sm:text-right font-mono text-[11px] space-y-0.5 payslip-period-info">
             <p className="text-slate-500 dark:text-slate-400">Pay Period: <span className="text-slate-900 dark:text-white font-semibold payslip-value">01 Oct - 15 Oct 2026</span></p>
             <p className="text-slate-500 dark:text-slate-400">Payment Date: <span className="text-cyan-600 dark:text-cyan-400 font-semibold payslip-value">18 Oct 2026</span></p>
-            <p className="text-slate-400 dark:text-slate-500 payslip-ref">Pay Slip Ref: <span className="text-slate-600 dark:text-slate-400 payslip-ref-code">PS-{employee.id}-202610</span></p>
+            <p className="text-slate-400 dark:text-slate-400 payslip-ref">Pay Slip Ref: <span className="text-slate-600 dark:text-slate-400 payslip-ref-code">PS-{employee.id}-202610</span></p>
           </div>
         </div>
 
@@ -99,11 +99,11 @@ export default function PayslipModal({ employee, payrollData, onClose }) {
           </div>
           <div>
             <span className="text-slate-500 uppercase tracking-wider text-[10px] block payslip-label">Staff ID / Role</span>
-            <p className="font-mono text-cyan-600 dark:text-cyan-300 mt-0.5 payslip-data">{employee.id} • {employee.role}</p>
+            <p className="font-mono text-cyan-600 dark:text-cyan-300 mt-0.5 payslip-data">{employee.id} â€¢ {employee.role}</p>
           </div>
           <div>
             <span className="text-slate-500 uppercase tracking-wider text-[10px] block payslip-label">NRIC / Passport</span>
-            <p className="font-mono text-slate-600 dark:text-slate-300 mt-0.5 payslip-data">{employee.nationalId || 'ID-••••••-••-••••'}</p>
+            <p className="font-mono text-slate-600 dark:text-slate-300 mt-0.5 payslip-data">{employee.nationalId || 'ID-â€¢â€¢â€¢â€¢â€¢â€¢-â€¢â€¢-â€¢â€¢â€¢â€¢'}</p>
           </div>
           <div>
             <span className="text-slate-500 uppercase tracking-wider text-[10px] block payslip-label">Disbursement Account</span>
@@ -178,7 +178,7 @@ export default function PayslipModal({ employee, payrollData, onClose }) {
                 <span className="text-rose-600 dark:text-rose-400 payslip-deduction-amount">-RM {(payRecord.statutoryDeductions * 0.15).toFixed(2)}</span>
               </div>
 
-              <div className="flex justify-between items-center text-slate-400 dark:text-slate-500 payslip-row">
+              <div className="flex justify-between items-center text-slate-400 dark:text-slate-400 payslip-row">
                 <div>
                   <p className="payslip-item-name">Unpaid Leave Deductions</p>
                   <p className="text-[10px] payslip-item-desc">0 unexcused absences</p>
@@ -211,10 +211,11 @@ export default function PayslipModal({ employee, payrollData, onClose }) {
           </div>
         </div>
 
-        <p className="text-[10px] text-slate-400 dark:text-slate-500 text-center leading-relaxed payslip-footer-note">
+        <p className="text-[10px] text-slate-400 dark:text-slate-400 text-center leading-relaxed payslip-footer-note">
           This is a computer-generated payslip audited under Fair Labor Standards and local Statutory Employment Acts. No manual signature required.
         </p>
       </div>
     </AccessibleModal>
   );
 }
+

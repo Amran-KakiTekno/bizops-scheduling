@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+﻿import React, { useState } from 'react';
 import AccessibleModal from './AccessibleModal';
 import { 
   Calendar, 
@@ -168,7 +168,7 @@ export default function LeaveClaimsView({
                         <span className="underline cursor-pointer">{req.docAttached}</span>
                       </div>
                     ) : (
-                      <p className="text-slate-400 dark:text-slate-500 text-[10px]">No medical slip required</p>
+                      <p className="text-slate-400 dark:text-slate-400 text-[10px]">No medical slip required</p>
                     )}
                   </div>
                 </div>
@@ -249,7 +249,7 @@ export default function LeaveClaimsView({
                         </span>
                       </div>
                       <p className="text-[11px] text-slate-500 dark:text-slate-400 mt-0.5">
-                        Claimed by <strong className="text-slate-800 dark:text-slate-200">{claim.name}</strong> • {claim.date}
+                        Claimed by <strong className="text-slate-800 dark:text-slate-200">{claim.name}</strong> â€¢ {claim.date}
                       </p>
                       <p className="text-[11px] text-slate-500 italic mt-0.5">"{claim.description}"</p>
                     </div>
@@ -305,7 +305,7 @@ export default function LeaveClaimsView({
               <div>
                 <h3 id="reject-leave-modal-title" className="font-bold text-sm text-slate-900 dark:text-white">Decline Leave Request</h3>
                 <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5">
-                  {rejectingLeave.name} • <span className="text-cyan-600 dark:text-cyan-400">{rejectingLeave.type}</span>
+                  {rejectingLeave.name} â€¢ <span className="text-cyan-600 dark:text-cyan-400">{rejectingLeave.type}</span>
                 </p>
               </div>
             </div>
@@ -403,3 +403,4 @@ export default function LeaveClaimsView({
     </div>
   );
 }
+

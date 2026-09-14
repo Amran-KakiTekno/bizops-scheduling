@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+﻿import React, { useState, useEffect } from 'react';
 import { 
   Users, 
   CalendarClock, 
@@ -254,7 +254,7 @@ export default function App() {
               <div className="px-1 py-1">
                 <div className="flex items-center gap-2 px-2.5 py-1.5 rounded-lg bg-slate-100/80 dark:bg-slate-900/80 border border-slate-200 dark:border-slate-800 text-[11px] text-slate-600 dark:text-slate-400 font-mono">
                   <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse shrink-0"></span>
-                  <span className="truncate">Downtown Flagship • HQ</span>
+                  <span className="truncate">Downtown Flagship â€¢ HQ</span>
                 </div>
               </div>
             </div>
@@ -277,7 +277,7 @@ export default function App() {
                     }`}
                   >
                     <div className="flex items-center gap-2.5 min-w-0">
-                      <Icon className={`w-4 h-4 shrink-0 ${isActive ? 'text-cyan-600 dark:text-cyan-400' : 'text-slate-400 dark:text-slate-500'}`} />
+                      <Icon className={`w-4 h-4 shrink-0 ${isActive ? 'text-cyan-600 dark:text-cyan-400' : 'text-slate-400 dark:text-slate-400'}`} />
                       <span className="truncate">{tab.label}</span>
                     </div>
                     <div className="flex items-center gap-1.5 shrink-0">
@@ -296,7 +296,7 @@ export default function App() {
             </nav>
           </div>
 
-          {/* Bottom footer: Settings trigger (⚙️) + Suite Waffle Menu */}
+          {/* Bottom footer: Settings trigger (âš™ï¸) + Suite Waffle Menu */}
           <div className="pt-3 border-t border-slate-200 dark:border-slate-800 flex items-center justify-between px-1">
             <button
               type="button"
@@ -606,7 +606,7 @@ export default function App() {
                       </div>
                       <div className="min-w-0">
                         <p className="text-xs font-semibold truncate">{item.label}</p>
-                        <p className="text-[11px] text-slate-400 dark:text-slate-500 truncate">{item.desc}</p>
+                        <p className="text-[11px] text-slate-400 dark:text-slate-400 truncate">{item.desc}</p>
                       </div>
                     </div>
                     {isActive && (
@@ -634,7 +634,7 @@ export default function App() {
                 </div>
                 <div className="min-w-0">
                   <p className="text-xs font-semibold truncate">{t('settings')}</p>
-                  <p className="text-[11px] text-slate-400 dark:text-slate-500 truncate">{t('settingsSub')}</p>
+                  <p className="text-[11px] text-slate-400 dark:text-slate-400 truncate">{t('settingsSub')}</p>
                 </div>
               </div>
               <ChevronRight className="w-4 h-4 text-slate-400 shrink-0" />
@@ -688,3 +688,4 @@ export default function App() {
     </div>
   );
 }
+
